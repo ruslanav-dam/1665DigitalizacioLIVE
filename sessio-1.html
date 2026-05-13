@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DASP · Sessió 1 — Digitalització, IT/OT i THD · La Salle Tarragona</title>
+<link rel="stylesheet" href="index.css">
+<style>
+  body { background: var(--gray-50); }
+
+  /* ===== Header ===== */
+  .site-header {
+    background: var(--white);
+    border-bottom: 3px solid var(--gold);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .site-header-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .site-logo { height: 56px; width: auto; border-radius: var(--radius-sm); flex-shrink: 0; }
+  .site-title-block { flex: 1; min-width: 0; }
+  .site-title-block .module {
+    color: var(--navy); font-size: 1.15rem; font-weight: 700; line-height: 1.2; margin: 0;
+  }
+  .site-title-block .session { color: var(--gray-600); font-size: 0.92rem; margin-top: 0.15rem; }
+  .site-meta { text-align: right; font-size: 0.78rem; color: var(--gray-500); line-height: 1.3; }
+  .site-meta strong { color: var(--navy); display: block; font-size: 0.92rem; }
+
+  /* ===== Nav ===== */
+  .topnav {
+    background: var(--navy);
+    border-bottom: 1px solid var(--navy-dark);
+    position: sticky; top: 96px; z-index: 99;
+  }
+  .topnav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex; gap: 0.2rem; overflow-x: auto;
+  }
+  .topnav a {
+    color: rgba(255,255,255,0.88); text-decoration: none;
+    padding: 0.7rem 1rem; font-size: 0.88rem; font-weight: 500;
+    border-bottom: 2px solid transparent; white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .topnav a:hover { color: var(--white); }
+  .topnav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ===== Layout ===== */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+  section.card {
+    background: var(--white); border: var(--border); border-radius: var(--radius);
+    padding: 2rem 2.2rem; margin-bottom: 1.5rem; scroll-margin-top: 140px;
+  }
+  section.card.accent-top { border-top: 3px solid var(--gold); }
+
+  /* ===== Typography ===== */
+  h1, h2, h3, h4 { color: var(--navy); font-weight: 700; line-height: 1.25; }
+  h2 {
+    font-size: 1.55rem; margin: 0 0 0.4rem 0;
+    display: flex; align-items: baseline; gap: 0.6rem;
+  }
+  h2 .num {
+    color: var(--gold); font-size: 1rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  h2 + .lead { color: var(--gray-600); font-size: 1rem; margin: 0 0 1.4rem 0; }
+  h3 {
+    font-size: 1.18rem; margin: 1.6rem 0 0.6rem 0;
+    padding-bottom: 0.3rem; border-bottom: 1px solid var(--gray-200);
+  }
+  h4 { font-size: 1rem; margin: 1rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul, ol { padding-left: 1.5rem; }
+  li { margin-bottom: 0.35rem; }
+  strong { color: var(--navy); }
+  code {
+    background: var(--gray-100); padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm); font-size: 0.88em;
+  }
+
+  /* ===== Tables ===== */
+  .tbl-wrap { overflow-x: auto; margin: 0.8rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td {
+    border: 1px solid var(--gray-200); padding: 0.6rem 0.8rem;
+    text-align: left; vertical-align: top;
+  }
+  th { background: var(--navy); color: var(--white); font-weight: 600; border-color: var(--navy); }
+  tr:nth-child(even) td { background: var(--gray-50); }
+  td.num { font-weight: 700; color: var(--navy); text-align: center; width: 40px; }
+  td.code { font-weight: 700; color: var(--navy); background: var(--gold) !important; text-align: center; width: 60px; }
+
+  /* ===== Timeline ===== */
+  .timeline {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.7rem; margin: 1rem 0;
+  }
+  .timeline-item {
+    background: var(--gray-50); border-left: 3px solid var(--navy);
+    padding: 0.8rem 0.9rem; border-radius: var(--radius-sm);
+  }
+  .timeline-item .year {
+    color: var(--gold-dark); font-weight: 700; font-size: 0.85rem;
+    display: block; margin-bottom: 0.2rem;
+  }
+  .timeline-item .title {
+    color: var(--navy); font-weight: 600; display: block; margin-bottom: 0.15rem;
+  }
+  .timeline-item .desc { color: var(--gray-600); font-size: 0.85rem; }
+
+  /* ===== THD grid ===== */
+  .thd-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.8rem; margin: 1.2rem 0;
+  }
+  .thd-card {
+    background: var(--white); border: var(--border); border-top: 3px solid var(--gold);
+    border-radius: var(--radius); padding: 1rem;
+  }
+  .thd-card .icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    background: var(--navy); color: var(--gold);
+    border-radius: var(--radius-sm); font-size: 1rem; margin-bottom: 0.5rem;
+  }
+  .thd-card h4 { margin: 0 0 0.3rem 0; color: var(--navy); }
+  .thd-card p { font-size: 0.9rem; margin: 0.3rem 0; }
+  .thd-card .ex {
+    color: var(--gray-500); font-size: 0.83rem; font-style: italic;
+    margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--gray-200);
+  }
+
+  /* ===== Callouts ===== */
+  .callout { border-radius: var(--radius); padding: 0.9rem 1.1rem; margin: 1rem 0; font-size: 0.93rem; }
+  .callout strong:first-child { display: block; margin-bottom: 0.25rem; }
+  .callout.info { background: #eff6ff; border-left: 3px solid var(--info); }
+  .callout.success { background: #f0fdf4; border-left: 3px solid var(--success); }
+  .callout.warn { background: #fffbeb; border-left: 3px solid var(--warning); }
+  .callout.gold { background: #fdf6e3; border-left: 3px solid var(--gold); }
+
+  /* ===== Quotes ===== */
+  blockquote {
+    background: var(--gray-50); border-left: 3px solid var(--navy);
+    padding: 0.8rem 1.1rem; margin: 0.8rem 0;
+    border-radius: 0 var(--radius) var(--radius) 0; font-size: 0.95rem;
+  }
+  blockquote.alt { border-left-color: var(--gold); }
+
+  /* ===== Activity (now content-only) ===== */
+  .activity {
+    background: var(--gray-50); border: var(--border);
+    border-left: 3px solid var(--navy);
+    border-radius: var(--radius); padding: 1.4rem 1.6rem; margin: 1rem 0;
+  }
+  .ex-meta { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.2rem 0.6rem; border-radius: 11px;
+    font-size: 0.78rem; font-weight: 500;
+    border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-700);
+  }
+  .pill.time { border-color: var(--navy); color: var(--navy); }
+  .pill.mode { border-color: var(--gold-dark); color: var(--gold-dark); background: #fdf6e3; }
+  .pill.ca { border-color: var(--success); color: var(--success); background: #f0fdf4; }
+
+  .question-block {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1.1rem;
+    margin: 0.8rem 0;
+  }
+  .question-block::before {
+    content: "✏ Pregunta per respondre al teu document";
+    display: block; font-weight: 700;
+    color: var(--gold-dark); font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+  .question-block p { margin: 0.3rem 0; font-weight: 500; }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--navy); color: var(--white); border: none;
+    padding: 0.65rem 1.2rem; border-radius: var(--radius);
+    cursor: pointer; font-size: 0.92rem; font-weight: 600;
+    font-family: inherit; transition: background 0.15s;
+  }
+  .btn:hover { background: var(--navy-light); }
+  .btn.gold { background: var(--gold); color: var(--navy-dark); }
+  .btn.gold:hover { background: var(--gold-dark); color: var(--white); }
+  .btn.ghost {
+    background: transparent; color: var(--navy);
+    border: 1px solid var(--gray-300);
+  }
+  .btn.ghost:hover { border-color: var(--navy); background: var(--gray-50); }
+  .btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+
+  /* ===== Solutions (docent mode) ===== */
+  .solution { display: none; }
+  body.docent-mode .solution { display: block; }
+  body.docent-mode .activity { border-left-color: var(--gold); background: #fdf6e3; }
+  .solution-block {
+    background: #fdf6e3; border-left: 3px solid var(--gold);
+    padding: 0.8rem 1.1rem; border-radius: var(--radius-sm);
+    margin-top: 0.7rem; font-size: 0.9rem;
+  }
+  .solution-block::before {
+    content: "🔑 Solució docent";
+    display: block; font-weight: 700;
+    color: var(--gold-dark); font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+  .docent-badge {
+    position: fixed; top: 0.7rem; right: 1rem;
+    background: var(--gold); color: var(--navy-dark);
+    padding: 0.35rem 0.9rem; border-radius: 12px;
+    font-weight: 700; font-size: 0.8rem;
+    z-index: 200; display: none;
+  }
+  body.docent-mode .docent-badge { display: block; }
+
+  /* ===== Delivery box ===== */
+  .delivery {
+    background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+    color: var(--white); border-radius: var(--radius);
+    padding: 2rem 2.2rem; margin-top: 2rem;
+  }
+  .delivery h2 { color: var(--gold); }
+  .delivery h3 { color: var(--white); border-bottom-color: rgba(255,255,255,0.2); }
+  .delivery strong { color: var(--gold); }
+  .delivery ol li { margin-bottom: 0.6rem; }
+  .delivery code { background: rgba(255,255,255,0.15); color: var(--gold); }
+  .delivery .btn.ghost { color: var(--white); border-color: rgba(255,255,255,0.4); }
+  .delivery .btn.ghost:hover { background: rgba(255,255,255,0.12); border-color: var(--gold); }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--navy-dark); color: var(--gray-400);
+    padding: 2rem 1.5rem; text-align: center; font-size: 0.82rem;
+  }
+  footer p { margin: 0.2rem 0; }
+  footer .gold { color: var(--gold); }
+
+  /* ===== Modal ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(24,24,27,0.75);
+    display: none; align-items: center; justify-content: center;
+    z-index: 300; padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white); border-radius: var(--radius);
+    max-width: 720px; width: 100%; max-height: 86vh;
+    display: flex; flex-direction: column;
+    border-top: 4px solid var(--gold);
+  }
+  .modal-header {
+    padding: 1.2rem 1.5rem; border-bottom: var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal-header h3 { margin: 0; border: none; padding: 0; }
+  .modal-close {
+    background: none; border: none; font-size: 1.5rem;
+    color: var(--gray-500); cursor: pointer; line-height: 1;
+  }
+  .modal-body {
+    padding: 1.2rem 1.5rem; overflow-y: auto;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.85rem;
+    background: var(--gray-50); white-space: pre-wrap;
+  }
+  .modal-footer {
+    padding: 1rem 1.5rem; border-top: var(--border);
+    display: flex; justify-content: flex-end; gap: 0.6rem;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .site-header-inner { flex-wrap: wrap; }
+    .site-meta { display: none; }
+    .topnav { top: 88px; }
+    section.card { padding: 1.4rem; }
+  }
+
+  /* ===== Print ===== */
+  @media print {
+    .topnav, .docent-badge, .btn-row, .delivery .btn-row, footer, .modal-overlay { display: none !important; }
+    body { background: white; }
+    section.card { break-inside: avoid; border: none; padding: 0.5rem 0; }
+    body.docent-mode .solution { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <img src="lasalle_logo.JPG" alt="La Salle Tarragona" class="site-logo">
+    <div class="site-title-block">
+      <p class="module">Digitalització aplicada als sectors productius</p>
+      <p class="session">Sessió 1 · 2 h · IT/OT i Tecnologies Habilitadores Digitals</p>
+    </div>
+    <div class="site-meta">
+      <strong>CFGS · TRS.1665</strong>
+      Mòdul transversal<br>
+      La Salle Tarragona
+    </div>
+  </div>
+</header>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#intro">Inici</a>
+    <a href="#t1">Digitalització</a>
+    <a href="#t2">4.0 vs 5.0</a>
+    <a href="#t3">IT i OT</a>
+    <a href="#t4">THD</a>
+    <a href="#ex1">Activitats</a>
+    <a href="#entrega">Entrega</a>
+  </div>
+</nav>
+
+<div class="docent-badge">👁 Mode docent actiu</div>
+
+<main>
+
+<section class="card accent-top" id="intro">
+  <h2><span class="num">Benvinguda</span></h2>
+  <p class="lead">Aquesta web és el material de consulta de la sessió 1 del mòdul DASP: <strong>teoria</strong> + <strong>enunciats</strong> de les activitats.</p>
+
+  <div class="callout gold">
+    <strong>📌 Com funciona</strong>
+    Aquesta web només té <strong>contingut per llegir</strong>. Les respostes les redactes <strong>fora de la web</strong>, al teu propi document (Word, Google Docs, LibreOffice…), i el lliures com a <strong>PDF a la tasca de l'aula virtual</strong>.
+  </div>
+
+  <h3>Què aprendràs avui</h3>
+  <ul>
+    <li>Què és la digitalització i per què és estratègica.</li>
+    <li>La diferència entre la Indústria 4.0 i la 5.0.</li>
+    <li>Què són els entorns IT i OT i per què cal connectar-los.</li>
+    <li>Quines són les principals Tecnologies Habilitadores Digitals (THD).</li>
+  </ul>
+</section>
+
+<!-- ============================ TEORIA ============================ -->
+
+<section class="card" id="t1">
+  <h2><span class="num">Teoria 1</span> Què és la digitalització?</h2>
+  <p class="lead">És el procés mitjançant el qual una organització integra tecnologies digitals avançades a tota la seva cadena de valor.</p>
+
+  <p>L'objectiu: <strong>optimitzar processos, millorar l'eficiència i augmentar la competitivitat</strong>.</p>
+  <p>No és simplement "comprar ordinadors": és un <strong>canvi estratègic</strong> que afecta com l'empresa pren decisions, es comunica amb els clients i produeix.</p>
+
+  <div class="callout info">
+    <strong>Exemple ràpid</strong>
+    Una pastisseria que abans apuntava les comandes en un quadern i ara les rep via app, les processa amb un sistema que avisa la cuina, calcula matèries primeres i envia factures digitals — això és digitalització.
+  </div>
+
+  <h3>Processos clau de la digitalització</h3>
+  <ul>
+    <li><strong>Automatització</strong> de tasques repetitives.</li>
+    <li><strong>Sensorització</strong>: mesurar el món físic en temps real.</li>
+    <li><strong>Anàlisi de dades</strong>: convertir dades en decisions.</li>
+    <li><strong>Interconnexió de sistemes</strong>: que tot parli amb tot.</li>
+    <li><strong>Prestació de serveis digitals</strong>: apps, plataformes, atenció 24/7.</li>
+  </ul>
+</section>
+
+<section class="card" id="t2">
+  <h2><span class="num">Teoria 2</span> Les revolucions industrials</h2>
+  <p class="lead">La digitalització actual s'emmarca en la 4a revolució industrial; s'està obrint pas la 5a.</p>
+
+  <div class="timeline">
+    <div class="timeline-item"><span class="year">~1760</span><span class="title">1a revolució</span><span class="desc">Màquina de vapor. Mecanització.</span></div>
+    <div class="timeline-item"><span class="year">~1870</span><span class="title">2a revolució</span><span class="desc">Electricitat. Producció en massa.</span></div>
+    <div class="timeline-item"><span class="year">~1970</span><span class="title">3a revolució</span><span class="desc">Electrònica, PLCs, automatització.</span></div>
+    <div class="timeline-item"><span class="year">~2010</span><span class="title">4a revolució</span><span class="desc">Sistemes ciberfísics. IoT, IA, núvol.</span></div>
+    <div class="timeline-item"><span class="year">~2020</span><span class="title">5a revolució</span><span class="desc">Col·laboració humà-màquina. Sostenibilitat.</span></div>
+  </div>
+
+  <h3>Indústria 4.0 vs Indústria 5.0</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Aspecte</th><th>Indústria 4.0</th><th>Indústria 5.0</th></tr></thead>
+      <tbody>
+        <tr><td>Prioritat</td><td>Automatització total i connectivitat</td><td>Col·laboració humà-màquina</td></tr>
+        <tr><td>Paper humà</td><td>Reduir-lo amb robots i IA</td><td>Potenciar-lo: creativitat, estratègia</td></tr>
+        <tr><td>Objectius</td><td>Eficiència, costos, competitivitat</td><td>Benestar, ètica, sostenibilitat</td></tr>
+        <tr><td>Producció</td><td>Personalització massiva</td><td>Personalització profunda i humanitzada</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <strong>⚠ Important</strong>
+    La 5.0 no substitueix la 4.0, l'amplia. Les tecnologies són les mateixes (IA, IoT…), però el <em>per què les fem servir</em> canvia.
+  </div>
+</section>
+
+<section class="card" id="t3">
+  <h2><span class="num">Teoria 3</span> Entorns IT i OT</h2>
+  <p class="lead">Tota empresa digitalitzada té dos "mons" tecnològics que sovint van per separat però que cal connectar.</p>
+
+  <h3>IT — Information Technology</h3>
+  <p>Gestió de la <strong>informació empresarial</strong>: dades, comunicacions, processos administratius. És el món de les oficines.</p>
+  <ul>
+    <li><strong>Què fa:</strong> emmagatzemar, processar i transmetre dades de negoci.</li>
+    <li><strong>Dispositius:</strong> servidors, ordinadors, routers, firewalls.</li>
+    <li><strong>Programari:</strong> ERP, CRM, correu, Microsoft 365, Google Workspace.</li>
+    <li><strong>Prioritat:</strong> seguretat, integritat i accessibilitat de les dades.</li>
+  </ul>
+
+  <h3>OT — Operation Technology</h3>
+  <p>Control i monitoratge de <strong>sistemes físics i processos industrials</strong>. És el món de les fàbriques, magatzems, CPDs.</p>
+  <ul>
+    <li><strong>Què fa:</strong> controlar màquines i recollir dades de sensors en temps real.</li>
+    <li><strong>Dispositius:</strong> PLCs, Arduino, Raspberry Pi, sensors, robots, SAIs.</li>
+    <li><strong>Programari:</strong> SCADA, MES.</li>
+    <li><strong>Prioritat:</strong> fiabilitat, disponibilitat i seguretat física dels equips.</li>
+  </ul>
+
+  <h3>Diferències clau</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Aspecte</th><th>IT</th><th>OT</th></tr></thead>
+      <tbody>
+        <tr><td>Objectiu</td><td>Gestió de dades i sistemes de negoci</td><td>Control de processos físics</td></tr>
+        <tr><td>Abast</td><td>Oficines, xarxes, bases de dades</td><td>Maquinària, planta, CPD</td></tr>
+        <tr><td>Temps de resposta</td><td>No sempre crític</td><td>Crític, en temps real</td></tr>
+        <tr><td>Ciberseguretat</td><td>Protegir dades de hackers</td><td>Evitar fallades amb impacte físic</td></tr>
+        <tr><td>Cicle de vida</td><td>3-5 anys</td><td>15-20 anys (canvi lent)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Convergència IT-OT: l'eix de la Indústria 4.0</h3>
+  <p>Tradicionalment IT i OT anaven per separat. Avui s'han de <strong>connectar</strong> perquè les dades del món físic (OT) serveixin per prendre decisions de negoci (IT).</p>
+
+  <div class="callout success">
+    <strong>✓ Avantatges concrets</strong>
+    <ul>
+      <li><strong>Monitoratge en temps real</strong>: el director sap des de l'oficina què passa a la planta.</li>
+      <li><strong>Manteniment predictiu</strong>: un sensor detecta una anomalia i es genera automàticament un tiquet.</li>
+      <li><strong>Optimització energètica</strong>: sumant dades de planta i de negoci es redueix el consum.</li>
+      <li><strong>Decisions basades en dades</strong> en comptes d'intuïció.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="t4">
+  <h2><span class="num">Teoria 4</span> Tecnologies Habilitadores Digitals (THD)</h2>
+  <p class="lead">Les THD (<em>Key Enabling Technologies</em>) són les tecnologies que <strong>fan possible</strong> la digitalització.</p>
+
+  <div class="thd-grid">
+    <div class="thd-card">
+      <span class="icon">🧠</span><h4>Intel·ligència Artificial</h4>
+      <p>Sistemes que simulen raonament humà: prenen decisions, fan prediccions, classifiquen, generen.</p>
+      <p class="ex">Ex: un radiòleg auxiliat per IA detecta tumors abans i amb més precisió.</p>
+    </div>
+    <div class="thd-card">
+      <span class="icon">📊</span><h4>Big Data</h4>
+      <p>Gestió de <strong>volums massius</strong> de dades. Les 5V: Volum, Velocitat, Varietat, Veracitat, Valor.</p>
+      <p class="ex">Ex: una empresa de logística analitza milers de variables per calcular rutes òptimes.</p>
+    </div>
+    <div class="thd-card">
+      <span class="icon">☁</span><h4>Cloud Computing</h4>
+      <p>Infraestructura via Internet, amb pagament per ús. Tres models: <strong>IaaS · PaaS · SaaS</strong>.</p>
+      <p class="ex">Ex: Google Drive és SaaS, AWS EC2 és IaaS.</p>
+    </div>
+    <div class="thd-card">
+      <span class="icon">🌐</span><h4>Internet de les Coses (IoT)</h4>
+      <p>Xarxa de dispositius (sensors, actuadors) connectats que recullen dades en temps real. En entorn industrial: IIoT.</p>
+      <p class="ex">Ex: sensors a cada teler d'una fàbrica que avisen si falla.</p>
+    </div>
+    <div class="thd-card">
+      <span class="icon">🔗</span><h4>Blockchain</h4>
+      <p>Registre <strong>distribuït i immutable</strong>. Garanteix integritat sense una autoritat central.</p>
+      <p class="ex">Ex: criptomonedes, traçabilitat d'aliments, contractes intel·ligents.</p>
+    </div>
+    <div class="thd-card">
+      <span class="icon">🖨</span><h4>Fabricació additiva (3D)</h4>
+      <p>Creació d'objectes <strong>capa a capa</strong> a partir d'un model digital. Prototipat ràpid i personalització.</p>
+      <p class="ex">Ex: impressió 3D d'ossos abans d'una operació.</p>
+    </div>
+    <div class="thd-card">
+      <span class="icon">🤖</span><h4>Robòtica avançada</h4>
+      <p>Sistemes autònoms i col·laboratius (<em>cobots</em>) que treballen amb humans a planta.</p>
+      <p class="ex">Ex: braços robòtics a una línia d'automòbils.</p>
+    </div>
+    <div class="thd-card">
+      <span class="icon">📡</span><h4>5G / Connectivitat</h4>
+      <p>Xarxes mòbils d'<strong>alta velocitat i baixa latència</strong> (&lt; 1 ms). Habiliten IoT massiu.</p>
+      <p class="ex">Ex: coordinació de robots en magatzem sense col·lisions.</p>
+    </div>
+  </div>
+
+  <h3>Per què són importants?</h3>
+  <ul>
+    <li><strong>Sostenibilitat</strong>: economia circular, menys residus, menys energia.</li>
+    <li><strong>Nous mercats</strong>: Fintech, telemedicina, economia de plataformes.</li>
+    <li><strong>Eficiència</strong>: automatització i manteniment predictiu.</li>
+    <li><strong>Convergència IT-OT</strong>: habiliten que els dos mons parlin entre ells.</li>
+  </ul>
+</section>
+
+<!-- ============================ ACTIVITATS (només enunciats) ============================ -->
+
+<section class="card accent-top" id="ex1">
+  <h2><span class="num">Activitat 1</span> Debat — Indústria 4.0 vs 5.0</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 10 min</span>
+    <span class="pill mode">💬 Debat en grup</span>
+    <span class="pill ca">CA 1.1 · 1.2 · 1.7</span>
+  </div>
+
+  <div class="activity">
+    <p>Llegeix les dues afirmacions i, en grup, decidiu amb quina esteu d'acord. Podeu defensar una postura mixta.</p>
+
+    <blockquote><strong>Afirmació A:</strong> "La Indústria 4.0 és el pas definitiu: les màquines es comuniquen entre elles i l'empresa guanya eficiència. Digitalitzar-ho tot és l'objectiu."</blockquote>
+    <blockquote class="alt"><strong>Afirmació B:</strong> "La Indústria 5.0 corregeix la 4.0: no es tracta de treure persones de l'equació, sinó de fer que la tecnologia treballi per al benestar humà i la sostenibilitat."</blockquote>
+
+    <div class="question-block">
+      <p><strong>1.1</strong> · Indica amb quina afirmació estàs més d'acord i explica per què.</p>
+      <p><strong>1.2</strong> · Creus que la IA et substituirà o et complementarà al teu futur lloc de feina? Per què?</p>
+    </div>
+
+    <div class="solution-block solution">
+      No hi ha resposta única. Punts clau:
+      <ul>
+        <li>4.0 prioritza automatització i connectivitat (sistemes ciberfísics, IoT, IA).</li>
+        <li>5.0 reintegra la persona: creativitat, estratègia, sostenibilitat, benestar.</li>
+        <li>Al sector TRS els tècnics no desapareixen, s'<em>especialitzen</em>: ciberseguretat, IoT, integració de sistemes, cloud.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="card accent-top" id="ex2">
+  <h2><span class="num">Activitat 2</span> Classifica IT / OT a TecnoXarxa SL</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 25 min</span>
+    <span class="pill mode">👤 Individual</span>
+    <span class="pill ca">CA 1.3 · 1.4 · 1.5 · 1.6</span>
+  </div>
+
+  <div class="activity">
+    <p><strong>TecnoXarxa SL</strong> és una empresa fictícia de serveis de telecomunicacions i sistemes:</p>
+    <ul>
+      <li>Instal·lació i manteniment de xarxes LAN/WAN per a empreses</li>
+      <li>Gestió de servidors i núvol privat per a clients</li>
+      <li>Monitorització remota d'infraestructures 24/7</li>
+      <li>Helpdesk tècnic i suport a usuaris</li>
+    </ul>
+
+    <div class="question-block">
+      <p>Per a cada un dels 14 elements següents, indica al teu document:</p>
+      <ol>
+        <li>Si pertany a l'entorn <strong>IT</strong>, <strong>OT</strong> o <strong>IT+OT</strong>.</li>
+        <li>Una <strong>justificació breu</strong> (1-2 frases).</li>
+      </ol>
+    </div>
+
+    <h3>Elements a classificar</h3>
+    <div class="tbl-wrap">
+      <table id="a2-elements">
+        <thead><tr><th style="width:40px;">#</th><th>Element</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <p><strong>Pregunta de reflexió:</strong> TecnoXarxa vol integrar les dades dels sensors de temperatura del CPD amb el sistema de ticketing — si la temperatura supera 35 °C es crea un tiquet automàticament. <strong>És un exemple de convergència IT-OT? Per què? Quin avantatge aporta?</strong> (3-4 línies)</p>
+    </div>
+
+    <div class="solution-block solution">
+      <strong>Taula de respostes:</strong>
+      <ol id="a2-solutions"></ol>
+      <p style="margin-top:0.6rem;"><strong>Reflexió:</strong> Sí, és un exemple clar de convergència IT-OT. La temperatura és una dada <em>OT</em> (sensor físic) que s'integra amb un sistema <em>IT</em> (ticketing). L'avantatge: s'elimina la intervenció humana per detectar el problema, es guanya temps de resposta i es passa de manteniment correctiu a <strong>predictiu/reactiu automatitzat</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card accent-top" id="ex3">
+  <h2><span class="num">Activitat 3</span> Aparella THD amb cas d'ús</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 25 min</span>
+    <span class="pill mode">👥 En parelles</span>
+    <span class="pill ca">CA 2.1 · 2.2 · 2.4 · 2.5 · 2.6</span>
+  </div>
+
+  <div class="activity">
+    <h3>Recordatori ràpid de THD</h3>
+    <div class="thd-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));">
+      <div class="thd-card"><h4>T1 · IA</h4><p>Simula raonament humà</p></div>
+      <div class="thd-card"><h4>T2 · Big Data</h4><p>Dades massives</p></div>
+      <div class="thd-card"><h4>T3 · Cloud</h4><p>Infra via Internet</p></div>
+      <div class="thd-card"><h4>T4 · IoT</h4><p>Dispositius connectats</p></div>
+      <div class="thd-card"><h4>T5 · Blockchain</h4><p>Registre distribuït</p></div>
+      <div class="thd-card"><h4>T6 · 3D</h4><p>Fabricació additiva</p></div>
+      <div class="thd-card"><h4>T7 · 5G</h4><p>Connectivitat avançada</p></div>
+    </div>
+
+    <div class="question-block">
+      <p><strong>Part 1 — Aparellament:</strong> Per a cada cas d'ús (C1-C7), indica al teu document quina és la <strong>THD principal</strong> que l'habilita (T1-T7).</p>
+    </div>
+
+    <h3>Casos d'ús</h3>
+    <div class="tbl-wrap">
+      <table id="a3-cases">
+        <thead><tr><th style="width:60px;">Codi</th><th>Cas d'ús</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <p><strong>Part 2 — Inventa el teu cas d'ús:</strong> Penseu en el vostre futur lloc de treball com a tècnics de sistemes o telecomunicacions. Trieu <strong>dues THD</strong> i descriviu un cas d'ús real (3-5 línies) on s'apliquin conjuntament. Indiqueu l'avantatge i si afecta IT, OT o tots dos.</p>
+    </div>
+
+    <div class="solution-block solution">
+      <strong>Aparellament esperat:</strong>
+      <ul id="a3-solutions"></ul>
+      <p style="margin-top:0.6rem;"><strong>Exemple Part 2:</strong> "Una empresa de telecomunicacions instal·la sensors <strong>IoT (T4)</strong> a les antenes per recollir dades de rendiment en temps real. Aquestes dades s'envien a un sistema <strong>Cloud (T3)</strong> on un algoritme d'<strong>IA (T1)</strong> detecta anomalies i avisa el tècnic abans que l'antena deixi de funcionar. Afecta <strong>IT</strong> (gestió de dades) i <strong>OT</strong> (les antenes físiques)."</p>
+    </div>
+  </div>
+</section>
+
+<section class="card accent-top" id="ex4">
+  <h2><span class="num">Activitat 4</span> Tancament 3-2-1</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 5 min</span>
+    <span class="pill mode">👤 Individual</span>
+    <span class="pill ca">Síntesi RA1 · RA2</span>
+  </div>
+
+  <div class="activity">
+    <div class="question-block">
+      <p>Abans de tancar la sessió, escriu al teu document:</p>
+      <ul>
+        <li><strong>3 conceptes nous</strong> que has après avui (amb una paraula clau).</li>
+        <li><strong>2 coses interessants</strong> per al teu futur professional.</li>
+        <li><strong>1 dubte</strong> que et queda pendent.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ENTREGA ============================ -->
+
+<section class="delivery" id="entrega">
+  <h2><span class="num" style="color:var(--gold);">Entrega</span> Com lliurar la teva tasca</h2>
+  <p class="lead" style="color:rgba(255,255,255,0.85);">Aquesta web només té el contingut i els enunciats. <strong>Les respostes les redactes tu</strong> en un document i el lliures com a PDF a la tasca de l'aula virtual.</p>
+
+  <h3>Passos a seguir</h3>
+  <ol>
+    <li><strong>Obre un document nou</strong> a Word, Google Docs o LibreOffice.</li>
+    <li>Posa una <strong>portada</strong> amb: el teu nom, el codi del mòdul (CFGS.TRS.1665), la sessió (Sessió 1) i la data.</li>
+    <li>Pots <strong>copiar la plantilla d'entrega</strong> amb el botó de sota per tenir tots els enunciats ordenats.</li>
+    <li>Respon les <strong>preguntes de cada activitat</strong> (totes les marcades amb ✏ <em>Pregunta per respondre al teu document</em>).</li>
+    <li>Guarda el document com a <strong>PDF</strong>: <code>Fitxer → Exporta → PDF</code> (o <code>Imprimeix → Desa com a PDF</code>).</li>
+    <li>Anomena el fitxer: <code>cognom_nom_dasp_s1.pdf</code></li>
+    <li>Puja'l a la <strong>tasca</strong> corresponent de l'aula virtual.</li>
+  </ol>
+
+  <div class="btn-row">
+    <button class="btn gold" onclick="openTemplate()">📋 Copia plantilla d'entrega</button>
+    <button class="btn ghost" onclick="window.print()">🖨 Imprimeix per consultar en paper</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><span class="gold">La Salle Tarragona</span> · CFGS Sistemes de Telecomunicacions i Informàtics</p>
+  <p>Mòdul transversal · Digitalització aplicada als sectors productius (CFGS.TRS.1665)</p>
+  <p style="margin-top:0.6rem;font-size:0.75rem;">Mode docent: afegeix <code style="background:rgba(255,255,255,0.1);color:var(--gold);">?docent=1</code> a l'URL o mantén la tecla <strong style="color:var(--gold);">D</strong> 2 segons.</p>
+</footer>
+
+<div class="modal-overlay" id="template-modal" onclick="if(event.target===this)closeTemplate()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📋 Plantilla d'entrega</h3>
+      <button class="modal-close" onclick="closeTemplate()" aria-label="Tancar">×</button>
+    </div>
+    <div class="modal-body" id="template-content"></div>
+    <div class="modal-footer">
+      <button class="btn ghost" onclick="closeTemplate()">Tanca</button>
+      <button class="btn gold" onclick="copyTemplate()">📎 Copia al porta-retalls</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ELEMENTS_A2 = [
+  { name: "Sistema de ticketing per gestionar incidències (Jira Service Desk)", answer: "IT", just: "Gestiona informació i processos de negoci. No controla cap sistema físic." },
+  { name: "Sensors de temperatura als racks de servidors del CPD", answer: "OT", just: "Controlen un paràmetre físic (temperatura). Dispositiu de camp." },
+  { name: "Servidor de correu electrònic corporatiu", answer: "IT", just: "Infraestructura de comunicació empresarial. Gestiona dades i missatges." },
+  { name: "Controlador PLC que gestiona l'aire condicionat del CPD", answer: "OT", just: "Dispositiu de control de procés físic (climatització)." },
+  { name: "Sistema ERP per a facturació i comptabilitat", answer: "IT", just: "Sistema d'informació per a gestió empresarial." },
+  { name: "Sonda de monitorització de xarxa (Nagios, Zabbix)", answer: "IT+OT", just: "Recull dades de xarxa física (OT) i les visualitza al sistema IT." },
+  { name: "SAI amb gestió SNMP", answer: "IT+OT", just: "El SAI és OT (protecció física), la gestió SNMP és IT." },
+  { name: "Plataforma de videoconferència per a reunions internes", answer: "IT", just: "Eina de comunicació empresarial. Purament informacional." },
+  { name: "Sistema SCADA per monitoritzar l'alimentació elèctrica del CPD", answer: "OT", just: "Supervisió i adquisició de dades d'un procés físic." },
+  { name: "Tallafocs (firewall) de perímetre", answer: "IT", just: "Seguretat de xarxa informàtica." },
+  { name: "Eina CRM per gestionar la relació amb clients", answer: "IT", just: "Sistema de gestió empresarial." },
+  { name: "Raspberry Pi per automatitzar proves de connectivitat", answer: "OT", just: "Automatitza proves físiques. Si reporta a IT, és IT+OT." },
+  { name: "Plataforma cloud SaaS per a còpies de seguretat (Veeam Cloud)", answer: "IT", just: "Servei d'emmagatzematge i protecció de dades." },
+  { name: "Commutador (switch) gestionable de xarxa local", answer: "IT+OT", just: "Infraestructura física (OT), gestió i configuració (IT)." }
+];
+
+const CASES_A3 = [
+  { code: "C1", text: "Un hospital usa algoritmes per analitzar radiografies i detectar tumors amb més precisió que un radiòleg humà.", thd: "T1", thdName: "IA" },
+  { code: "C2", text: "Una empresa de logística analitza milers de variables (trànsit, temps, pes, combustible) per calcular la ruta més eficient.", thd: "T2", thdName: "Big Data" },
+  { code: "C3", text: "Una empresa de telecomunicacions emmagatzema les seves aplicacions de gestió de clients en servidors externs als quals accedeix via navegador, sense servidor propi.", thd: "T3", thdName: "Cloud" },
+  { code: "C4", text: "Una fàbrica tèxtil col·loca sensors a cada teler per saber en temps real quina màquina ha fallat i quant ha produït cada una.", thd: "T4", thdName: "IoT" },
+  { code: "C5", text: "Un banc registra cada transacció en un sistema descentralitzat de manera que ningú pot alterar l'historial sense que tots els nodes ho detectin.", thd: "T5", thdName: "Blockchain" },
+  { code: "C6", text: "Un hospital imprimeix models 3D dels ossos d'un pacient abans d'una operació per planificar la cirurgia.", thd: "T6", thdName: "Fabricació additiva" },
+  { code: "C7", text: "Uns robots autònoms en un magatzem es comuniquen entre ells amb latència inferior a 1 ms per coordinar moviments sense col·lisionar.", thd: "T7", thdName: "5G" }
+];
+
+// Render tables (read-only)
+const a2body = document.querySelector('#a2-elements tbody');
+ELEMENTS_A2.forEach((el, i) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td class="num">${i+1}</td><td>${el.name}</td>`;
+  a2body.appendChild(tr);
+});
+
+const a3body = document.querySelector('#a3-cases tbody');
+CASES_A3.forEach(c => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td class="code">${c.code}</td><td>${c.text}</td>`;
+  a3body.appendChild(tr);
+});
+
+// Render solutions (docent mode)
+const a2sols = document.getElementById('a2-solutions');
+ELEMENTS_A2.forEach(el => {
+  const li = document.createElement('li');
+  li.innerHTML = `<strong>${el.answer}</strong> — ${el.name}<br><em>${el.just}</em>`;
+  li.style.marginBottom = '0.5rem';
+  a2sols.appendChild(li);
+});
+
+const a3sols = document.getElementById('a3-solutions');
+CASES_A3.forEach(c => {
+  const li = document.createElement('li');
+  li.innerHTML = `<strong>${c.code} → ${c.thd}</strong> (${c.thdName})`;
+  a3sols.appendChild(li);
+});
+
+// Template builder (per copiar al document de l'alumne)
+function buildTemplate() {
+  const L = [];
+  L.push('=================================================');
+  L.push('  DASP · CFGS.TRS.1665 · Sessió 1');
+  L.push('  Plantilla d\'entrega');
+  L.push('=================================================');
+  L.push('');
+  L.push('Nom complet: _____________________________________');
+  L.push('Data:        _____________________________________');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 1 · Debat Indústria 4.0 vs 5.0');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('1.1 Postura sobre les afirmacions A i B (i per què):');
+  L.push('');
+  L.push('1.2 Creus que la IA et substituirà o et complementarà');
+  L.push('    al teu futur lloc de feina? Per què?');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 2 · Classifica IT / OT a TecnoXarxa SL');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('Per cada element, indica IT / OT / IT+OT i justifica:');
+  L.push('');
+  ELEMENTS_A2.forEach((el, idx) => {
+    L.push(`${idx+1}. ${el.name}`);
+    L.push('   Classificació: _______________');
+    L.push('   Justificació:  _______________________________');
+    L.push('');
+  });
+  L.push('Reflexió: La integració del sensor de temperatura');
+  L.push('del CPD amb el sistema de ticketing és un exemple');
+  L.push('de convergència IT-OT? Per què? Quin avantatge aporta?');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 3 · Aparella THD amb cas d\'ús');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('Part 1 — Aparellament (T1-T7 per cada cas):');
+  L.push('');
+  CASES_A3.forEach(c => {
+    L.push(`${c.code}: ${c.text}`);
+    L.push('    THD principal: _____');
+    L.push('');
+  });
+  L.push('Part 2 — Cas d\'ús inventat (2 THD combinades, 3-5 línies).');
+  L.push('Indica l\'avantatge i si afecta IT, OT o tots dos:');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 4 · Tancament 3-2-1');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('3 conceptes nous que he après:');
+  L.push('  1.');
+  L.push('  2.');
+  L.push('  3.');
+  L.push('');
+  L.push('2 coses útils per al meu futur professional:');
+  L.push('  1.');
+  L.push('  2.');
+  L.push('');
+  L.push('1 dubte pendent:');
+  L.push('');
+  return L.join('\n');
+}
+
+function openTemplate() {
+  document.getElementById('template-content').textContent = buildTemplate();
+  document.getElementById('template-modal').classList.add('open');
+}
+function closeTemplate() { document.getElementById('template-modal').classList.remove('open'); }
+function copyTemplate() {
+  const text = buildTemplate();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      const original = btn.textContent;
+      btn.textContent = '✓ Copiat!';
+      setTimeout(() => btn.textContent = original, 1800);
+    }).catch(() => fallbackCopy(text));
+  } else { fallbackCopy(text); }
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); alert('Plantilla copiada al porta-retalls.'); }
+  catch (e) { alert('No s\'ha pogut copiar. Selecciona el text manualment.'); }
+  document.body.removeChild(ta);
+}
+
+// Mode docent
+function setDocent(on) { document.body.classList.toggle('docent-mode', on); }
+if (new URLSearchParams(location.search).get('docent') === '1') setDocent(true);
+
+let dTimer = null;
+document.addEventListener('keydown', e => {
+  const inField = ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName);
+  if (e.key.toLowerCase() === 'd' && !e.repeat && !dTimer && !inField) {
+    dTimer = setTimeout(() => {
+      setDocent(!document.body.classList.contains('docent-mode'));
+      dTimer = null;
+    }, 2000);
+  }
+});
+document.addEventListener('keyup', e => {
+  if (e.key.toLowerCase() === 'd' && dTimer) { clearTimeout(dTimer); dTimer = null; }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTemplate(); });
+
+// Nav active state
+const navLinks = document.querySelectorAll('.topnav a');
+const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href')));
+function updateActiveNav() {
+  const scrollY = window.scrollY + 200;
+  let activeIdx = 0;
+  sections.forEach((sec, i) => { if (sec && sec.offsetTop <= scrollY) activeIdx = i; });
+  navLinks.forEach((link, i) => link.classList.toggle('active', i === activeIdx));
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+</script>
+
+</body>
+</html>

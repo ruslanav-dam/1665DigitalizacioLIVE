@@ -1,0 +1,49 @@
+:root {
+  --navy: #1B365D;
+  --navy-light: #2a4a7a;
+  --navy-dark: #132743;
+  --gold: #E8B430;
+  --gold-dark: #b8891c;
+  --white: #ffffff;
+  --gray-50: #fafafa;
+  --gray-100: #f4f4f5;
+  --gray-200: #e4e4e7;
+  --gray-300: #d4d4d8;
+  --gray-400: #a1a1aa;
+  --gray-500: #71717a;
+  --gray-600: #52525b;
+  --gray-700: #3f3f46;
+  --gray-800: #27272a;
+  --gray-900: #18181b;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --info: #2563eb;
+  --warning: #d97706;
+  --radius: 4px;
+  --radius-sm: 3px;
+  --radius-lg: 6px;
+  --shadow: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --border: 1px solid var(--gray-200);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--gray-800);
+  line-height: 1.6;
+  background: var(--white);
+  font-size: 15px;
+}
+
+code, .code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+a { color: var(--navy); }
