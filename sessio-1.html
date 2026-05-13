@@ -201,31 +201,6 @@
   .btn.ghost:hover { border-color: var(--navy); background: var(--gray-50); }
   .btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
 
-  /* ===== Solutions (docent mode) ===== */
-  .solution { display: none; }
-  body.docent-mode .solution { display: block; }
-  body.docent-mode .activity { border-left-color: var(--gold); background: #fdf6e3; }
-  .solution-block {
-    background: #fdf6e3; border-left: 3px solid var(--gold);
-    padding: 0.8rem 1.1rem; border-radius: var(--radius-sm);
-    margin-top: 0.7rem; font-size: 0.9rem;
-  }
-  .solution-block::before {
-    content: "🔑 Solució docent";
-    display: block; font-weight: 700;
-    color: var(--gold-dark); font-size: 0.8rem;
-    text-transform: uppercase; letter-spacing: 0.04em;
-    margin-bottom: 0.4rem;
-  }
-  .docent-badge {
-    position: fixed; top: 0.7rem; right: 1rem;
-    background: var(--gold); color: var(--navy-dark);
-    padding: 0.35rem 0.9rem; border-radius: 12px;
-    font-weight: 700; font-size: 0.8rem;
-    z-index: 200; display: none;
-  }
-  body.docent-mode .docent-badge { display: block; }
-
   /* ===== Delivery box ===== */
   .delivery {
     background: linear-gradient(135deg, var(--navy), var(--navy-dark));
@@ -307,9 +282,9 @@
       <p class="session">Sessió 1 · 2 h · IT/OT i Tecnologies Habilitadores Digitals</p>
     </div>
     <div class="site-meta">
-      <strong>CFGS · TRS.1665</strong>
-      Mòdul transversal<br>
-      La Salle Tarragona
+      <strong>Mòdul 1665</strong>
+      Digitalització aplicada<br>
+      als sectors productius
     </div>
   </div>
 </header>
@@ -325,8 +300,6 @@
     <a href="#entrega">Entrega</a>
   </div>
 </nav>
-
-<div class="docent-badge">👁 Mode docent actiu</div>
 
 <main>
 
@@ -530,19 +503,11 @@
       <p><strong>1.2</strong> · Creus que la IA et substituirà o et complementarà al teu futur lloc de feina? Per què?</p>
     </div>
 
-    <div class="solution-block solution">
-      No hi ha resposta única. Punts clau:
-      <ul>
-        <li>4.0 prioritza automatització i connectivitat (sistemes ciberfísics, IoT, IA).</li>
-        <li>5.0 reintegra la persona: creativitat, estratègia, sostenibilitat, benestar.</li>
-        <li>Al sector TRS els tècnics no desapareixen, s'<em>especialitzen</em>: ciberseguretat, IoT, integració de sistemes, cloud.</li>
-      </ul>
     </div>
-  </div>
 </section>
 
 <section class="card accent-top" id="ex2">
-  <h2><span class="num">Activitat 2</span> Classifica IT / OT a TecnoXarxa SL</h2>
+  <h2><span class="num">Activitat 2</span> Classifica IT / OT a PixelForge Studios</h2>
   <div class="ex-meta">
     <span class="pill time">⏱ 25 min</span>
     <span class="pill mode">👤 Individual</span>
@@ -550,12 +515,12 @@
   </div>
 
   <div class="activity">
-    <p><strong>TecnoXarxa SL</strong> és una empresa fictícia de serveis de telecomunicacions i sistemes:</p>
+    <p><strong>PixelForge Studios</strong> és un estudi fictici de videojocs amb:</p>
     <ul>
-      <li>Instal·lació i manteniment de xarxes LAN/WAN per a empreses</li>
-      <li>Gestió de servidors i núvol privat per a clients</li>
-      <li>Monitorització remota d'infraestructures 24/7</li>
-      <li>Helpdesk tècnic i suport a usuaris</li>
+      <li>Desenvolupament de videojocs multiplataforma (mòbil, PC, consola)</li>
+      <li>Servidors propis de joc multijugador en línia</li>
+      <li>Estudi propi de captura de moviment per a animacions de personatges</li>
+      <li>Botiga digital de marxandatge i continguts descarregables (DLC)</li>
     </ul>
 
     <div class="question-block">
@@ -575,15 +540,10 @@
     </div>
 
     <div class="question-block">
-      <p><strong>Pregunta de reflexió:</strong> TecnoXarxa vol integrar les dades dels sensors de temperatura del CPD amb el sistema de ticketing — si la temperatura supera 35 °C es crea un tiquet automàticament. <strong>És un exemple de convergència IT-OT? Per què? Quin avantatge aporta?</strong> (3-4 línies)</p>
+      <p><strong>Pregunta de reflexió:</strong> PixelForge vol integrar les dades dels sensors de temperatura de la sala de servidors amb el sistema de tickets de Jira — si la temperatura supera 35 °C es crea automàticament un ticket d'incidència per a l'equip de DevOps. <strong>És un exemple de convergència IT-OT? Per què? Quin avantatge aporta?</strong> (3-4 línies)</p>
     </div>
 
-    <div class="solution-block solution">
-      <strong>Taula de respostes:</strong>
-      <ol id="a2-solutions"></ol>
-      <p style="margin-top:0.6rem;"><strong>Reflexió:</strong> Sí, és un exemple clar de convergència IT-OT. La temperatura és una dada <em>OT</em> (sensor físic) que s'integra amb un sistema <em>IT</em> (ticketing). L'avantatge: s'elimina la intervenció humana per detectar el problema, es guanya temps de resposta i es passa de manteniment correctiu a <strong>predictiu/reactiu automatitzat</strong>.</p>
     </div>
-  </div>
 </section>
 
 <section class="card accent-top" id="ex3">
@@ -619,15 +579,10 @@
     </div>
 
     <div class="question-block">
-      <p><strong>Part 2 — Inventa el teu cas d'ús:</strong> Penseu en el vostre futur lloc de treball com a tècnics de sistemes o telecomunicacions. Trieu <strong>dues THD</strong> i descriviu un cas d'ús real (3-5 línies) on s'apliquin conjuntament. Indiqueu l'avantatge i si afecta IT, OT o tots dos.</p>
+      <p><strong>Part 2 — Inventa el teu cas d'ús:</strong> Penseu en el vostre futur lloc de treball com a <strong>desenvolupadors d'aplicacions multiplataforma o de videojocs</strong>. Trieu <strong>dues THD</strong> i descriviu un cas d'ús real (3-5 línies) on s'apliquin conjuntament. Indiqueu l'avantatge i si afecta IT, OT o tots dos.</p>
     </div>
 
-    <div class="solution-block solution">
-      <strong>Aparellament esperat:</strong>
-      <ul id="a3-solutions"></ul>
-      <p style="margin-top:0.6rem;"><strong>Exemple Part 2:</strong> "Una empresa de telecomunicacions instal·la sensors <strong>IoT (T4)</strong> a les antenes per recollir dades de rendiment en temps real. Aquestes dades s'envien a un sistema <strong>Cloud (T3)</strong> on un algoritme d'<strong>IA (T1)</strong> detecta anomalies i avisa el tècnic abans que l'antena deixi de funcionar. Afecta <strong>IT</strong> (gestió de dades) i <strong>OT</strong> (les antenes físiques)."</p>
     </div>
-  </div>
 </section>
 
 <section class="card accent-top" id="ex4">
@@ -653,19 +608,20 @@
 <!-- ============================ ENTREGA ============================ -->
 
 <section class="delivery" id="entrega">
-  <h2><span class="num" style="color:var(--gold);">Entrega</span> Com lliurar la teva tasca</h2>
-  <p class="lead" style="color:rgba(255,255,255,0.85);">Aquesta web només té el contingut i els enunciats. <strong>Les respostes les redactes tu</strong> en un document i el lliures com a PDF a la tasca de l'aula virtual.</p>
+  <h2><span class="num" style="color:var(--gold);">Entrega</span> Què has de lliurar</h2>
+  <p class="lead" style="color:rgba(255,255,255,0.85);">Aquesta web només té el contingut i els enunciats. Les respostes les redactes al teu document i el lliures a l'aula virtual.</p>
 
-  <h3>Passos a seguir</h3>
-  <ol>
-    <li><strong>Obre un document nou</strong> a Word, Google Docs o LibreOffice.</li>
-    <li>Posa una <strong>portada</strong> amb: el teu nom, el codi del mòdul (CFGS.TRS.1665), la sessió (Sessió 1) i la data.</li>
-    <li>Pots <strong>copiar la plantilla d'entrega</strong> amb el botó de sota per tenir tots els enunciats ordenats.</li>
-    <li>Respon les <strong>preguntes de cada activitat</strong> (totes les marcades amb ✏ <em>Pregunta per respondre al teu document</em>).</li>
-    <li>Guarda el document com a <strong>PDF</strong>: <code>Fitxer → Exporta → PDF</code> (o <code>Imprimeix → Desa com a PDF</code>).</li>
-    <li>Anomena el fitxer: <code>cognom_nom_dasp_s1.pdf</code></li>
-    <li>Puja'l a la <strong>tasca</strong> corresponent de l'aula virtual.</li>
-  </ol>
+  <h3>Contingut del document</h3>
+  <ul>
+    <li><strong>Portada</strong> amb el teu nom, el mòdul (1665 — Digitalització aplicada als sectors productius) i la sessió (Sessió 1).</li>
+    <li>Les <strong>respostes a totes les preguntes</strong> marcades amb ✏ <em>Pregunta per respondre al teu document</em> (activitats 1 a 4).</li>
+  </ul>
+
+  <h3>Nom del fitxer</h3>
+  <p><code>cognom_nom_dasp_s1.pdf</code></p>
+
+  <h3>Format d'entrega</h3>
+  <p>Fitxer <strong>PDF</strong> pujat a la tasca corresponent de l'aula virtual.</p>
 
   <div class="btn-row">
     <button class="btn gold" onclick="openTemplate()">📋 Copia plantilla d'entrega</button>
@@ -676,10 +632,9 @@
 </main>
 
 <footer>
-  <p><span class="gold">La Salle Tarragona</span> · CFGS Sistemes de Telecomunicacions i Informàtics</p>
-  <p>Mòdul transversal · Digitalització aplicada als sectors productius (CFGS.TRS.1665)</p>
-  <p style="margin-top:0.6rem;font-size:0.75rem;">Mode docent: afegeix <code style="background:rgba(255,255,255,0.1);color:var(--gold);">?docent=1</code> a l'URL o mantén la tecla <strong style="color:var(--gold);">D</strong> 2 segons.</p>
-</footer>
+  <p><span class="gold">La Salle Tarragona</span> · Desenvolupament d'Aplicacions Multiplataforma · Videojocs i Oci Digital</p>
+  <p>Mòdul 1665 · Digitalització aplicada als sectors productius</p>
+  </footer>
 
 <div class="modal-overlay" id="template-modal" onclick="if(event.target===this)closeTemplate()">
   <div class="modal">
@@ -697,26 +652,26 @@
 
 <script>
 const ELEMENTS_A2 = [
-  { name: "Sistema de ticketing per gestionar incidències (Jira Service Desk)", answer: "IT", just: "Gestiona informació i processos de negoci. No controla cap sistema físic." },
-  { name: "Sensors de temperatura als racks de servidors del CPD", answer: "OT", just: "Controlen un paràmetre físic (temperatura). Dispositiu de camp." },
-  { name: "Servidor de correu electrònic corporatiu", answer: "IT", just: "Infraestructura de comunicació empresarial. Gestiona dades i missatges." },
-  { name: "Controlador PLC que gestiona l'aire condicionat del CPD", answer: "OT", just: "Dispositiu de control de procés físic (climatització)." },
-  { name: "Sistema ERP per a facturació i comptabilitat", answer: "IT", just: "Sistema d'informació per a gestió empresarial." },
-  { name: "Sonda de monitorització de xarxa (Nagios, Zabbix)", answer: "IT+OT", just: "Recull dades de xarxa física (OT) i les visualitza al sistema IT." },
-  { name: "SAI amb gestió SNMP", answer: "IT+OT", just: "El SAI és OT (protecció física), la gestió SNMP és IT." },
-  { name: "Plataforma de videoconferència per a reunions internes", answer: "IT", just: "Eina de comunicació empresarial. Purament informacional." },
-  { name: "Sistema SCADA per monitoritzar l'alimentació elèctrica del CPD", answer: "OT", just: "Supervisió i adquisició de dades d'un procés físic." },
-  { name: "Tallafocs (firewall) de perímetre", answer: "IT", just: "Seguretat de xarxa informàtica." },
-  { name: "Eina CRM per gestionar la relació amb clients", answer: "IT", just: "Sistema de gestió empresarial." },
-  { name: "Raspberry Pi per automatitzar proves de connectivitat", answer: "OT", just: "Automatitza proves físiques. Si reporta a IT, és IT+OT." },
-  { name: "Plataforma cloud SaaS per a còpies de seguretat (Veeam Cloud)", answer: "IT", just: "Servei d'emmagatzematge i protecció de dades." },
-  { name: "Commutador (switch) gestionable de xarxa local", answer: "IT+OT", just: "Infraestructura física (OT), gestió i configuració (IT)." }
+  { name: "Sistema de tickets per gestionar bugs i tasques de desenvolupament (Jira, GitHub Issues)", answer: "IT", just: "Gestiona informació i processos de negoci. No controla cap sistema físic." },
+  { name: "Sensors de temperatura a la sala de servidors de joc multijugador", answer: "OT", just: "Controlen un paràmetre físic (temperatura). Dispositiu de camp." },
+  { name: "Servidor de correu electrònic de l'estudi", answer: "IT", just: "Infraestructura de comunicació empresarial. Gestiona dades i missatges." },
+  { name: "Controlador PLC que gestiona la climatització de l'estudi de captura de moviment", answer: "OT", just: "Dispositiu de control de procés físic. Lògica programable d'operació." },
+  { name: "Sistema ERP per a gestió financera i nòmines", answer: "IT", just: "Sistema d'informació per a gestió empresarial." },
+  { name: "Sonda de monitorització dels servidors de joc multijugador (Grafana, Prometheus)", answer: "IT+OT", just: "Recull dades dels servidors físics (OT) i les visualitza al sistema IT. Pont entre tots dos mons." },
+  { name: "SAI amb gestió SNMP que protegeix la sala de servidors", answer: "IT+OT", just: "El SAI és OT (protecció física d'alimentació), la gestió SNMP és IT (transmissió d'estat)." },
+  { name: "Plataforma de videoconferència per a reunions amb publishers i editors", answer: "IT", just: "Eina de comunicació i col·laboració empresarial." },
+  { name: "Sistema SCADA que controla les càmeres i llums de l'estudi de captura de moviment", answer: "OT", just: "Sistema de supervisió i control d'equipament físic en temps real." },
+  { name: "Tallafocs (firewall) perimetral", answer: "IT", just: "Seguretat de xarxa informàtica. Protegeix dades i sistemes d'informació." },
+  { name: "Eina CRM per gestionar relacions amb publishers i jugadors VIP", answer: "IT", just: "Sistema de gestió de relacions amb clients i socis comercials." },
+  { name: "Raspberry Pi que automatitza proves QA en dispositius mòbils i tauletes físics", answer: "OT", just: "Controla i interacciona amb maquinari físic durant proves. Si reporta a IT, és IT+OT." },
+  { name: "Plataforma cloud SaaS per a còpies de seguretat del codi font (GitHub, Backblaze)", answer: "IT", just: "Servei d'emmagatzematge i protecció de codi i dades digitals." },
+  { name: "Commutador (switch) gestionable de la xarxa local de l'oficina", answer: "IT+OT", just: "Infraestructura física de xarxa (OT), però la gestió i configuració és IT." }
 ];
 
 const CASES_A3 = [
   { code: "C1", text: "Un hospital usa algoritmes per analitzar radiografies i detectar tumors amb més precisió que un radiòleg humà.", thd: "T1", thdName: "IA" },
   { code: "C2", text: "Una empresa de logística analitza milers de variables (trànsit, temps, pes, combustible) per calcular la ruta més eficient.", thd: "T2", thdName: "Big Data" },
-  { code: "C3", text: "Una empresa de telecomunicacions emmagatzema les seves aplicacions de gestió de clients en servidors externs als quals accedeix via navegador, sense servidor propi.", thd: "T3", thdName: "Cloud" },
+  { code: "C3", text: "Una petita empresa emmagatzema les seves aplicacions de gestió de clients en servidors externs als quals accedeix via navegador, sense servidor propi.", thd: "T3", thdName: "Cloud" },
   { code: "C4", text: "Una fàbrica tèxtil col·loca sensors a cada teler per saber en temps real quina màquina ha fallat i quant ha produït cada una.", thd: "T4", thdName: "IoT" },
   { code: "C5", text: "Un banc registra cada transacció en un sistema descentralitzat de manera que ningú pot alterar l'historial sense que tots els nodes ho detectin.", thd: "T5", thdName: "Blockchain" },
   { code: "C6", text: "Un hospital imprimeix models 3D dels ossos d'un pacient abans d'una operació per planificar la cirurgia.", thd: "T6", thdName: "Fabricació additiva" },
@@ -758,7 +713,8 @@ CASES_A3.forEach(c => {
 function buildTemplate() {
   const L = [];
   L.push('=================================================');
-  L.push('  DASP · CFGS.TRS.1665 · Sessió 1');
+  L.push('  Mòdul 1665 · Digitalització aplicada als sectors productius');
+  L.push('  Sessió 1');
   L.push('  Plantilla d\'entrega');
   L.push('=================================================');
   L.push('');
@@ -775,7 +731,7 @@ function buildTemplate() {
   L.push('    al teu futur lloc de feina? Per què?');
   L.push('');
   L.push('-------------------------------------------------');
-  L.push('ACTIVITAT 2 · Classifica IT / OT a TecnoXarxa SL');
+  L.push('ACTIVITAT 2 · Classifica IT / OT a PixelForge Studios');
   L.push('-------------------------------------------------');
   L.push('');
   L.push('Per cada element, indica IT / OT / IT+OT i justifica:');
@@ -786,9 +742,9 @@ function buildTemplate() {
     L.push('   Justificació:  _______________________________');
     L.push('');
   });
-  L.push('Reflexió: La integració del sensor de temperatura');
-  L.push('del CPD amb el sistema de ticketing és un exemple');
-  L.push('de convergència IT-OT? Per què? Quin avantatge aporta?');
+  L.push('Reflexió: La integració dels sensors de temperatura');
+  L.push('de la sala de servidors amb el sistema de tickets de Jira');
+  L.push('és un exemple de convergència IT-OT? Per què? Quin avantatge aporta?');
   L.push('');
   L.push('-------------------------------------------------');
   L.push('ACTIVITAT 3 · Aparella THD amb cas d\'ús');
@@ -847,23 +803,6 @@ function fallbackCopy(text) {
   document.body.removeChild(ta);
 }
 
-// Mode docent
-function setDocent(on) { document.body.classList.toggle('docent-mode', on); }
-if (new URLSearchParams(location.search).get('docent') === '1') setDocent(true);
-
-let dTimer = null;
-document.addEventListener('keydown', e => {
-  const inField = ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName);
-  if (e.key.toLowerCase() === 'd' && !e.repeat && !dTimer && !inField) {
-    dTimer = setTimeout(() => {
-      setDocent(!document.body.classList.contains('docent-mode'));
-      dTimer = null;
-    }, 2000);
-  }
-});
-document.addEventListener('keyup', e => {
-  if (e.key.toLowerCase() === 'd' && dTimer) { clearTimeout(dTimer); dTimer = null; }
-});
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTemplate(); });
 
 // Nav active state
