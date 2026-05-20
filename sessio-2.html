@@ -299,6 +299,8 @@
   /* ===== Print ===== */
   @media print {
     .topnav, .docent-badge, .btn-row, .delivery .btn-row, footer, .modal-overlay { display: none !important; }
+    /* Imprimir només les activitats: amaga la intro, les 4 seccions de teoria i el bloc d'entrega */
+    #intro, #t1, #t2, #t3, #t4, .delivery { display: none !important; }
     body { background: white; }
     section.card { break-inside: avoid; border: none; padding: 0.5rem 0; }
     body.docent-mode .solution { display: block; }
