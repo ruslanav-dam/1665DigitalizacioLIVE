@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DASP · Sessió 2 — Cloud, IA i Dades · La Salle Tarragona</title>
+<link rel="stylesheet" href="index.css">
+<style>
+  body { background: var(--gray-50); }
+
+  /* ===== Header ===== */
+  .site-header {
+    background: var(--white);
+    border-bottom: 3px solid var(--gold);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .site-header-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .site-logo { height: 56px; width: auto; border-radius: var(--radius-sm); flex-shrink: 0; }
+  .site-title-block { flex: 1; min-width: 0; }
+  .site-title-block .module {
+    color: var(--navy); font-size: 1.15rem; font-weight: 700; line-height: 1.2; margin: 0;
+  }
+  .site-title-block .session { color: var(--gray-600); font-size: 0.92rem; margin-top: 0.15rem; }
+  .site-meta { text-align: right; font-size: 0.78rem; color: var(--gray-500); line-height: 1.3; }
+  .site-meta strong { color: var(--navy); display: block; font-size: 0.92rem; }
+
+  /* ===== Nav ===== */
+  .topnav {
+    background: var(--navy);
+    border-bottom: 1px solid var(--navy-dark);
+    position: sticky; top: 96px; z-index: 99;
+  }
+  .topnav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex; gap: 0.2rem; overflow-x: auto;
+  }
+  .topnav a {
+    color: rgba(255,255,255,0.88); text-decoration: none;
+    padding: 0.7rem 1rem; font-size: 0.88rem; font-weight: 500;
+    border-bottom: 2px solid transparent; white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .topnav a:hover { color: var(--white); }
+  .topnav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ===== Layout ===== */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+  section.card {
+    background: var(--white); border: var(--border); border-radius: var(--radius);
+    padding: 2rem 2.2rem; margin-bottom: 1.5rem; scroll-margin-top: 140px;
+  }
+  section.card.accent-top { border-top: 3px solid var(--gold); }
+
+  /* ===== Typography ===== */
+  h1, h2, h3, h4 { color: var(--navy); font-weight: 700; line-height: 1.25; }
+  h2 {
+    font-size: 1.55rem; margin: 0 0 0.4rem 0;
+    display: flex; align-items: baseline; gap: 0.6rem;
+  }
+  h2 .num {
+    color: var(--gold); font-size: 1rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  h2 + .lead { color: var(--gray-600); font-size: 1rem; margin: 0 0 1.4rem 0; }
+  h3 {
+    font-size: 1.18rem; margin: 1.6rem 0 0.6rem 0;
+    padding-bottom: 0.3rem; border-bottom: 1px solid var(--gray-200);
+  }
+  h4 { font-size: 1rem; margin: 1rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul, ol { padding-left: 1.5rem; }
+  li { margin-bottom: 0.35rem; }
+  strong { color: var(--navy); }
+  code {
+    background: var(--gray-100); padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm); font-size: 0.88em;
+  }
+
+  /* ===== Tables ===== */
+  .tbl-wrap { overflow-x: auto; margin: 0.8rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td {
+    border: 1px solid var(--gray-200); padding: 0.6rem 0.8rem;
+    text-align: left; vertical-align: top;
+  }
+  th { background: var(--navy); color: var(--white); font-weight: 600; border-color: var(--navy); }
+  tr:nth-child(even) td { background: var(--gray-50); }
+  td.num { font-weight: 700; color: var(--navy); text-align: center; width: 40px; }
+  td.code { font-weight: 700; color: var(--navy); background: var(--gold) !important; text-align: center; width: 60px; }
+
+  /* ===== Continuum diagram (Cloud/Edge/Fog/Mist) ===== */
+  .continuum {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem; margin: 1.2rem 0;
+  }
+  .layer-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-top: 3px solid var(--navy);
+    border-radius: var(--radius); padding: 1rem;
+  }
+  .layer-card.l-cloud { border-top-color: #2563eb; }
+  .layer-card.l-edge  { border-top-color: #16a34a; }
+  .layer-card.l-fog   { border-top-color: var(--gold); }
+  .layer-card.l-mist  { border-top-color: #b45309; }
+  .layer-card .layer-name {
+    font-weight: 700; color: var(--navy); font-size: 1.05rem;
+    display: block; margin-bottom: 0.3rem;
+  }
+  .layer-card .layer-desc { font-size: 0.88rem; color: var(--gray-700); }
+  .layer-card .layer-ex {
+    color: var(--gray-500); font-size: 0.82rem; font-style: italic;
+    margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--gray-200);
+  }
+  @media (max-width: 768px) { .continuum { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ===== Hierarchy boxes (IA > ML > DL > LLM) ===== */
+  .hierarchy {
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    padding: 1.2rem; border-radius: var(--radius); margin: 1rem 0;
+  }
+  .hierarchy .ring {
+    padding: 0.8rem 1rem; border-radius: var(--radius);
+    margin: 0 auto 0.5rem; border: 2px solid var(--navy);
+  }
+  .hierarchy .ring strong { color: var(--navy); font-size: 1rem; }
+  .hierarchy .ring .desc { display: block; font-size: 0.85rem; color: var(--gray-600); margin-top: 0.2rem; }
+  .ring.r1 { width: 100%; background: rgba(27,54,93,0.05); }
+  .ring.r2 { width: 84%; background: rgba(27,54,93,0.08); }
+  .ring.r3 { width: 68%; background: rgba(27,54,93,0.11); }
+  .ring.r4 { width: 52%; background: rgba(27,54,93,0.14); }
+  .ring.r5 { width: 36%; background: rgba(27,54,93,0.18); }
+
+  /* ===== 5V grid ===== */
+  .v-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.7rem; margin: 1rem 0;
+  }
+  .v-card {
+    background: var(--white); border: var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius); padding: 0.8rem 1rem;
+  }
+  .v-card h4 { margin: 0 0 0.2rem; color: var(--navy); font-size: 1rem; }
+  .v-card p { font-size: 0.88rem; margin: 0.2rem 0; }
+
+  /* ===== Lifecycle steps ===== */
+  .lifecycle {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem; margin: 1rem 0;
+  }
+  .life-step {
+    background: var(--gray-50); border-left: 3px solid var(--navy);
+    padding: 0.7rem 0.9rem; border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+  }
+  .life-step .step-num {
+    color: var(--gold-dark); font-weight: 700; font-size: 0.8rem;
+    display: block; margin-bottom: 0.15rem;
+  }
+  .life-step strong { display: block; color: var(--navy); margin-bottom: 0.2rem; }
+
+  /* ===== Callouts ===== */
+  .callout { border-radius: var(--radius); padding: 0.9rem 1.1rem; margin: 1rem 0; font-size: 0.93rem; }
+  .callout strong:first-child { display: block; margin-bottom: 0.25rem; }
+  .callout.info { background: #eff6ff; border-left: 3px solid var(--info); }
+  .callout.success { background: #f0fdf4; border-left: 3px solid var(--success); }
+  .callout.warn { background: #fffbeb; border-left: 3px solid var(--warning); }
+  .callout.gold { background: #fdf6e3; border-left: 3px solid var(--gold); }
+  .callout.danger { background: #fef2f2; border-left: 3px solid var(--danger); }
+
+  /* ===== Quotes ===== */
+  blockquote {
+    background: var(--gray-50); border-left: 3px solid var(--navy);
+    padding: 0.8rem 1.1rem; margin: 0.8rem 0;
+    border-radius: 0 var(--radius) var(--radius) 0; font-size: 0.95rem;
+  }
+  blockquote.alt { border-left-color: var(--gold); }
+
+  /* ===== Activity ===== */
+  .activity {
+    background: var(--gray-50); border: var(--border);
+    border-left: 3px solid var(--navy);
+    border-radius: var(--radius); padding: 1.4rem 1.6rem; margin: 1rem 0;
+  }
+  .ex-meta { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.2rem 0.6rem; border-radius: 11px;
+    font-size: 0.78rem; font-weight: 500;
+    border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-700);
+  }
+  .pill.time { border-color: var(--navy); color: var(--navy); }
+  .pill.mode { border-color: var(--gold-dark); color: var(--gold-dark); background: #fdf6e3; }
+  .pill.ca { border-color: var(--success); color: var(--success); background: #f0fdf4; }
+
+  .question-block {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1.1rem;
+    margin: 0.8rem 0;
+  }
+  .question-block::before {
+    content: "✏ Pregunta per respondre al teu document";
+    display: block; font-weight: 700;
+    color: var(--gold-dark); font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+  .question-block p { margin: 0.3rem 0; font-weight: 500; }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--navy); color: var(--white); border: none;
+    padding: 0.65rem 1.2rem; border-radius: var(--radius);
+    cursor: pointer; font-size: 0.92rem; font-weight: 600;
+    font-family: inherit; transition: background 0.15s;
+  }
+  .btn:hover { background: var(--navy-light); }
+  .btn.gold { background: var(--gold); color: var(--navy-dark); }
+  .btn.gold:hover { background: var(--gold-dark); color: var(--white); }
+  .btn.ghost {
+    background: transparent; color: var(--navy);
+    border: 1px solid var(--gray-300);
+  }
+  .btn.ghost:hover { border-color: var(--navy); background: var(--gray-50); }
+  .btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+
+  /* ===== Delivery box ===== */
+  .delivery {
+    background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+    color: var(--white); border-radius: var(--radius);
+    padding: 2rem 2.2rem; margin-top: 2rem;
+  }
+  .delivery h2 { color: var(--gold); }
+  .delivery h3 { color: var(--white); border-bottom-color: rgba(255,255,255,0.2); }
+  .delivery strong { color: var(--gold); }
+  .delivery ol li { margin-bottom: 0.6rem; }
+  .delivery code { background: rgba(255,255,255,0.15); color: var(--gold); }
+  .delivery .btn.ghost { color: var(--white); border-color: rgba(255,255,255,0.4); }
+  .delivery .btn.ghost:hover { background: rgba(255,255,255,0.12); border-color: var(--gold); }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--navy-dark); color: var(--gray-400);
+    padding: 2rem 1.5rem; text-align: center; font-size: 0.82rem;
+  }
+  footer p { margin: 0.2rem 0; }
+  footer .gold { color: var(--gold); }
+
+  /* ===== Modal ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(24,24,27,0.75);
+    display: none; align-items: center; justify-content: center;
+    z-index: 300; padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white); border-radius: var(--radius);
+    max-width: 720px; width: 100%; max-height: 86vh;
+    display: flex; flex-direction: column;
+    border-top: 4px solid var(--gold);
+  }
+  .modal-header {
+    padding: 1.2rem 1.5rem; border-bottom: var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal-header h3 { margin: 0; border: none; padding: 0; }
+  .modal-close {
+    background: none; border: none; font-size: 1.5rem;
+    color: var(--gray-500); cursor: pointer; line-height: 1;
+  }
+  .modal-body {
+    padding: 1.2rem 1.5rem; overflow-y: auto;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.85rem;
+    background: var(--gray-50); white-space: pre-wrap;
+  }
+  .modal-footer {
+    padding: 1rem 1.5rem; border-top: var(--border);
+    display: flex; justify-content: flex-end; gap: 0.6rem;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .site-header-inner { flex-wrap: wrap; }
+    .site-meta { display: none; }
+    .topnav { top: 88px; }
+    section.card { padding: 1.4rem; }
+  }
+
+  /* ===== Print ===== */
+  @media print {
+    .topnav, .docent-badge, .btn-row, .delivery .btn-row, footer, .modal-overlay { display: none !important; }
+    body { background: white; }
+    section.card { break-inside: avoid; border: none; padding: 0.5rem 0; }
+    body.docent-mode .solution { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <img src="lasalle_logo.JPG" alt="La Salle Tarragona" class="site-logo">
+    <div class="site-title-block">
+      <p class="module">Digitalització aplicada als sectors productius</p>
+      <p class="session">Sessió 2 · 2 h · Cloud, IA i Dades</p>
+    </div>
+    <div class="site-meta">
+      <strong>Mòdul 1665</strong>
+      Digitalització aplicada<br>
+      als sectors productius
+    </div>
+  </div>
+</header>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#intro">Inici</a>
+    <a href="#t1">Cloud</a>
+    <a href="#t2">Edge·Fog·Mist</a>
+    <a href="#t3">IA</a>
+    <a href="#t4">Dades i GDPR</a>
+    <a href="#ex1">Activitats</a>
+    <a href="#entrega">Entrega</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="card accent-top" id="intro">
+  <h2><span class="num">Benvinguda</span></h2>
+  <p class="lead">Aquesta web és el material de consulta de la sessió 2 del mòdul DASP: <strong>teoria</strong> + <strong>enunciats</strong> de les activitats.</p>
+
+  <div class="callout gold">
+    <strong>📌 Com funciona</strong>
+    Aquesta web només té <strong>contingut per llegir</strong>. Les respostes les redactes <strong>fora de la web</strong>, al teu propi document (Word, Google Docs, LibreOffice…), i el lliures com a <strong>PDF a la tasca de l'aula virtual</strong>.
+  </div>
+
+  <h3>Què aprendràs avui</h3>
+  <ul>
+    <li>Què és el <strong>cloud computing</strong> i els seus models de servei (IaaS · PaaS · SaaS) i desplegament.</li>
+    <li>El continuum <strong>cloud → edge → fog → mist</strong> i on es processa cada dada.</li>
+    <li>La jerarquia de la <strong>IA</strong> (IA · ML · DL · LLM) i la seva relació amb el Big Data.</li>
+    <li>El <strong>cicle de vida de la dada</strong>, les 5V del Big Data i les bases del GDPR i la ciberseguretat.</li>
+  </ul>
+
+  <div class="callout info">
+    <strong>↗ Recordatori sessió 1</strong>
+    Avui aprofundim en 3 de les 8 THD que vam veure la setmana passada: <strong>Cloud, IA i Big Data</strong>. Els exemples segueixen ambientats a <strong>PixelForge Studios</strong>, l'estudi fictici de videojocs que ja coneixes.
+  </div>
+</section>
+
+<!-- ============================ TEORIA ============================ -->
+
+<section class="card" id="t1">
+  <h2><span class="num">Teoria 1</span> Cloud computing</h2>
+  <p class="lead">El <em>núvol</em> és infraestructura informàtica que <strong>algú altre administra</strong> i tu fas servir per Internet amb pagament per ús.</p>
+
+  <h3>Models de servei</h3>
+  <p>La metàfora de la pizza:</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>Què gestiona el proveïdor</th><th>Què gestiones tu</th><th>Exemple</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>IaaS</strong><br><em>Infrastructure as a Service</em></td>
+          <td>Maquinari, virtualització, xarxa.</td>
+          <td>Sistema operatiu, software, dades.</td>
+          <td>AWS EC2, Google Compute Engine, Azure VMs</td>
+        </tr>
+        <tr>
+          <td><strong>PaaS</strong><br><em>Platform as a Service</em></td>
+          <td>Maquinari + SO + plataforma de desplegament.</td>
+          <td>L'aplicació i les dades.</td>
+          <td>Firebase, Replit, Heroku, Vercel, Google App Engine</td>
+        </tr>
+        <tr>
+          <td><strong>SaaS</strong><br><em>Software as a Service</em></td>
+          <td>Tot el <em>stack</em>.</td>
+          <td>Només l'ús (i les teves dades dins l'app).</td>
+          <td>Gmail, Google Docs, Slack, Steam, Spotify, ChatGPT</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout info">
+    <strong>🍕 Resumit en 1 frase</strong>
+    IaaS = "compres ingredients, fas la pizza tu". PaaS = "compres una pizza congelada, escalfes". SaaS = "vas a la pizzeria i te la porten".
+  </div>
+
+  <h3>Models de desplegament</h3>
+  <ul>
+    <li><strong>Públic</strong>: serveis oberts a qualsevol client (AWS, GCP, Azure). Més barat, menys control.</li>
+    <li><strong>Privat</strong>: infraestructura dedicada per a una sola organització. Més control, més cost.</li>
+    <li><strong>Híbrid</strong>: combinació pública + privada. Les dades sensibles al privat, la resta al públic.</li>
+    <li><strong>Multi-cloud</strong>: usar diversos proveïdors públics alhora per evitar dependència o per resilència.</li>
+  </ul>
+
+  <h3>Avantatges i inconvenients</h3>
+  <div class="callout success">
+    <strong>✓ Avantatges</strong>
+    Escalabilitat instantània, pagament per ús, accés des de qualsevol lloc, manteniment delegat, alta disponibilitat, ciberseguretat gestionada pel proveïdor.
+  </div>
+  <div class="callout warn">
+    <strong>⚠ Inconvenients</strong>
+    Dependència d'Internet, risc de fuites de dades, costos imprevisibles si no monitores, problemes d'integració amb sistemes <em>legacy</em>, latència en escenaris crítics.
+  </div>
+</section>
+
+<section class="card" id="t2">
+  <h2><span class="num">Teoria 2</span> Edge, Fog i Mist computing</h2>
+  <p class="lead">No tot s'ha de processar al núvol. A vegades cal acostar el càlcul al lloc on es genera la dada.</p>
+
+  <div class="continuum">
+    <div class="layer-card l-cloud">
+      <span class="layer-name">☁ Cloud</span>
+      <div class="layer-desc">Datacenter remot del proveïdor. Capacitat massiva, latència alta.</div>
+      <div class="layer-ex">Ex: Google BigQuery on l'estudi guarda 5 anys de partides per a anàlisi forense.</div>
+    </div>
+    <div class="layer-card l-edge">
+      <span class="layer-name">🏢 Edge</span>
+      <div class="layer-desc">Servidor local del client (on-premise). Latència baixa, càrrega limitada.</div>
+      <div class="layer-ex">Ex: servidor on-premise a la seu de PixelForge amb ML per detectar trampes.</div>
+    </div>
+    <div class="layer-card l-fog">
+      <span class="layer-name">🌫 Fog</span>
+      <div class="layer-desc">Passarel·la intermèdia (gateway). Agrega i prefiltra dades.</div>
+      <div class="layer-ex">Ex: gameserver regional que valida moviments de tots els clients d'una partida.</div>
+    </div>
+    <div class="layer-card l-mist">
+      <span class="layer-name">💧 Mist</span>
+      <div class="layer-desc">Processament al propi dispositiu (microcontrolador, client). Latència mínima.</div>
+      <div class="layer-ex">Ex: lògica anti-aimbot integrada al client del joc al PC del jugador.</div>
+    </div>
+  </div>
+
+  <h3>Quan triar cada nivell</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Necessitat</th><th>Nivell recomanat</th></tr></thead>
+      <tbody>
+        <tr><td>Latència &lt; 1 ms (acció instantània)</td><td>Mist</td></tr>
+        <tr><td>Decisió de partida en pocs ms</td><td>Fog</td></tr>
+        <tr><td>Anàlisi ML amb context de tot l'estudi</td><td>Edge</td></tr>
+        <tr><td>Emmagatzematge massiu i anàlisi a llarg termini</td><td>Cloud</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout info">
+    <strong>↻ El cloud no desapareix</strong>
+    Edge/Fog/Mist no <em>substitueixen</em> el cloud, l'<em>complementen</em>. La majoria d'arquitectures reals combinen els quatre nivells.
+  </div>
+</section>
+
+<section class="card" id="t3">
+  <h2><span class="num">Teoria 3</span> Intel·ligència Artificial</h2>
+  <p class="lead">La IA no és una sola tecnologia: és un conjunt de capes que es contenen unes a les altres.</p>
+
+  <h3>Jerarquia IA → ML → DL → LLM</h3>
+  <div class="hierarchy">
+    <div class="ring r1">
+      <strong>IA — Intel·ligència Artificial</strong>
+      <span class="desc">Sistemes que simulen processos intel·ligents humans (raonament, decisió). Ex: Stockfish (sense ML).</span>
+    </div>
+    <div class="ring r2">
+      <strong>ML — Machine Learning</strong>
+      <span class="desc">Algoritmes que aprenen patrons de les dades sense regles explícites. Ex: filtre antispam de Gmail.</span>
+    </div>
+    <div class="ring r3">
+      <strong>Xarxes neuronals</strong>
+      <span class="desc">Models inspirats en el cervell humà per reconèixer patrons complexos.</span>
+    </div>
+    <div class="ring r4">
+      <strong>DL — Deep Learning</strong>
+      <span class="desc">Xarxes neuronals profundes (moltes capes). Visió per computador, reconeixement de veu.</span>
+    </div>
+    <div class="ring r5">
+      <strong>LLM — Large Language Models</strong>
+      <span class="desc">Models entrenats amb text massiu per generar llenguatge natural. Ex: ChatGPT, Claude, Copilot.</span>
+    </div>
+  </div>
+
+  <h3>Per què la IA necessita Big Data?</h3>
+  <div class="callout gold">
+    <strong>👨‍🍳 La metàfora del cuiner</strong>
+    La <strong>IA és el cuiner</strong>, el <strong>Big Data és la matèria primera</strong>. Sense ingredients de qualitat (dades massives, netes, ben etiquetades), el plat (model) no surt bé. Per això les empreses que tenen <em>dades pròpies</em> (Google, Meta, Riot Games) tenen avantatge en IA.
+  </div>
+
+  <h3>Aplicacions de la IA al sector videojoc i oci digital</h3>
+  <ul>
+    <li><strong>NPCs intel·ligents</strong>: comportament adaptatiu, no escriptat.</li>
+    <li><strong>Anti-cheat ML</strong>: detecta patrons d'aimbot/wallhack que les regles fixes no veuen.</li>
+    <li><strong>Generació procedural</strong>: textures, mons, personatges (Stable Diffusion).</li>
+    <li><strong>Matchmaking</strong>: emparellar jugadors d'habilitat similar per maximitzar diversió.</li>
+    <li><strong>Moderació de xat</strong>: detecció de toxicitat (Perspective API).</li>
+    <li><strong>Recomanació</strong>: Steam suggereix jocs basant-se en el teu historial.</li>
+    <li><strong>Eines de dev</strong>: Copilot, Cursor, Claude Code ajudant a programar.</li>
+  </ul>
+
+  <h3>Tecnologia de la IA</h3>
+  <ul>
+    <li><strong>Llenguatge principal</strong>: Python (biblioteques TensorFlow, PyTorch, scikit-learn).</li>
+    <li><strong>Hardware</strong>: GPU NVIDIA amb CUDA per a entrenament; TPU de Google al cloud.</li>
+    <li><strong>Servei</strong>: gairebé tothom consumeix IA via API (OpenAI, Anthropic, Hugging Face) en comptes d'entrenar-la.</li>
+  </ul>
+</section>
+
+<section class="card" id="t4">
+  <h2><span class="num">Teoria 4</span> Dades, Big Data i ciberseguretat</h2>
+  <p class="lead">Les dades són la matèria primera de l'economia digital. Cuidar-les bé és tant ètic com legal.</p>
+
+  <h3>Dada · Informació · Coneixement</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepte</th><th>Definició</th><th>Exemple sala servidors</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Dada</strong></td><td>Fet brut, sense context.</td><td><code>32</code></td></tr>
+        <tr><td><strong>Informació</strong></td><td>Dada amb context que la fa interpretable.</td><td>"La sala de servidors està a 32 °C."</td></tr>
+        <tr><td><strong>Coneixement</strong></td><td>Conjunt d'informació que permet decidir i actuar.</td><td>"Estem 5 °C per sobre del llindar; obre el ticket i alerta l'oncall."</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Cicle de vida de la dada</h3>
+  <div class="lifecycle">
+    <div class="life-step"><span class="step-num">FASE 1</span><strong>Creació / Captura</strong>Sensors, formularis, transaccions, SDK de telemetria.</div>
+    <div class="life-step"><span class="step-num">FASE 2</span><strong>Emmagatzematge</strong>Bases SQL/NoSQL, data lakes al cloud.</div>
+    <div class="life-step"><span class="step-num">FASE 3</span><strong>Processament</strong>Neteja, anàlisi i algoritmes ML.</div>
+    <div class="life-step"><span class="step-num">FASE 4</span><strong>Ús / Distribució</strong>Dashboards, informes, decisions.</div>
+    <div class="life-step"><span class="step-num">FASE 5</span><strong>Arxivament</strong>Conservació per a auditories o llei.</div>
+    <div class="life-step"><span class="step-num">FASE 6</span><strong>Eliminació</strong>Destrucció segura segons GDPR.</div>
+  </div>
+
+  <h3>Les 5V del Big Data</h3>
+  <div class="v-grid">
+    <div class="v-card"><h4>Volum</h4><p>Petabytes o exabytes (Fortnite genera ~200 TB/dia de telemetria).</p></div>
+    <div class="v-card"><h4>Velocitat</h4><p>Generació en temps real (cada input del jugador).</p></div>
+    <div class="v-card"><h4>Varietat</h4><p>Estructurades (SQL), semi (JSON), no (vídeo, veu).</p></div>
+    <div class="v-card"><h4>Veracitat</h4><p>Qualitat: dades errònies o duplicades trenquen els models.</p></div>
+    <div class="v-card"><h4>Valor</h4><p>Capacitat de convertir-ho en decisions útils per al negoci.</p></div>
+  </div>
+  <p style="font-size:0.85rem;color:var(--gray-600);"><em>Algunes fonts hi afegeixen Variabilitat (context canviant) i Visualització (representació gràfica) → 7V.</em></p>
+
+  <h3>Ciberseguretat i GDPR</h3>
+  <ul>
+    <li><strong>Amenaces típiques</strong>: ransomware, phishing, bretxes de dades, atacs supply-chain, ataques DDoS a servidors de joc.</li>
+    <li><strong>IT vs OT</strong>: a IT protegim dades; a OT protegim el funcionament físic (un atac a un PLC pot incendiar la sala).</li>
+    <li><strong>Zero Trust</strong>: cap dispositiu ni usuari és de confiança per defecte, ni dins de la xarxa interna.</li>
+    <li><strong>GDPR</strong> (UE):
+      <ul>
+        <li>Dret d'accés, rectificació, supressió ("dret a l'oblit"), portabilitat.</li>
+        <li>Principi de minimització: només recollir les dades necessàries.</li>
+        <li>Principi de limitació de la conservació: no guardar més temps del necessari.</li>
+        <li>Sancions: fins al 4% de la facturació anual mundial.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="callout danger">
+    <strong>⚠ Sector videojoc: dades de menors</strong>
+    Una part important dels jugadors són menors d'edat. L'article 8 GDPR estableix obligacions reforçades (consentiment parental, edat mínima 16 anys —14 a Espanya—). Un estudi que no ho gestioni rep multes molt importants.
+  </div>
+</section>
+
+<!-- ============================ ACTIVITATS ============================ -->
+
+<section class="card accent-top" id="ex1">
+  <h2><span class="num">Activitat 1</span> Demo cloud: IaaS, PaaS i SaaS en viu</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 18 min</span>
+    <span class="pill mode">👤 Individual (demo dirigida)</span>
+    <span class="pill ca">CA 3.1 · 3.2 · 3.5</span>
+  </div>
+
+  <div class="activity">
+    <p>Provaràs en directe els tres models de servei cloud. Necessites navegador i compte de Google.</p>
+
+    <h3>Pas A · SaaS (4 min) — Google Sheets</h3>
+    <p>Obre <a href="https://drive.google.com" target="_blank" rel="noopener">Google Drive</a> i crea un <strong>full de càlcul nou</strong> anomenat <code>Demo Cloud - [el teu nom]</code>. <strong>Aquest serà el teu lliurable d'aquesta activitat</strong> — respon-hi les preguntes de cada pas.</p>
+
+    <div class="question-block">
+      <p><strong>A.1</strong> Qui gestiona el maquinari? <em>(Google / jo)</em></p>
+      <p><strong>A.2</strong> Qui gestiona el sistema operatiu? <em>(Google / jo)</em></p>
+      <p><strong>A.3</strong> Qui gestiona l'aplicació? <em>(Google / jo)</em></p>
+      <p><strong>A.4</strong> Quin model de servei és aquest? <em>(IaaS / PaaS / SaaS)</em></p>
+    </div>
+
+    <h3>Pas B · PaaS (5 min) — Replit</h3>
+    <p>Obre <a href="https://replit.com" target="_blank" rel="noopener">replit.com</a> i crea un Repl (Python o JS, sense instal·lar res al PC). Observa: no has triat sistema operatiu, no has instal·lat un compilador, no has obert un terminal.</p>
+
+    <div class="question-block">
+      <p><strong>B.1</strong> Qui proporciona l'entorn d'execució (servidor on corre el codi)? <em>(Replit / jo)</em></p>
+      <p><strong>B.2</strong> Pots instal·lar el SO que vulguis? <em>(Sí / No)</em></p>
+      <p><strong>B.3</strong> Quin model de servei és aquest? <em>(IaaS / PaaS / SaaS)</em></p>
+      <p><strong>B.4</strong> Posa un exemple de PaaS que faria servir un estudi de videojocs per desplegar el <em>backend</em> del joc (matchmaking, lleaderboards, autenticació) sense gestionar servidors.</p>
+    </div>
+
+    <h3>Pas C · IaaS (4 min) — AWS / GCP (projecció del docent)</h3>
+    <p>El docent mostrarà la consola d'AWS (o GCP) i la llista d'instàncies EC2 disponibles. Aquí <em>tu</em> hauries d'instal·lar el sistema operatiu i mantenir-lo.</p>
+
+    <div class="question-block">
+      <p><strong>C.1</strong> En IaaS, qui instal·la el sistema operatiu? <em>(el proveïdor / l'empresa client)</em></p>
+      <p><strong>C.2</strong> Escriu 1 avantatge d'IaaS respecte tenir un servidor físic propi.</p>
+      <p><strong>C.3</strong> Posa un exemple concret d'ús d'IaaS per a PixelForge Studios (per exemple, escalar servidors de partida durant un cap de setmana de llançament).</p>
+    </div>
+
+    <h3>Pas D · Reflexió (5 min)</h3>
+    <div class="question-block">
+      <p><strong>D.1</strong> Un estudi indie de 8 persones vol allotjar el sistema de tickets de bugs (Jira) i el CRM amb editores, sense comprar servidors ni contractar un sysadmin. Quin model cloud recomanaries? Justifica en 2-3 frases.</p>
+      <p><strong>D.2</strong> Quina diferència hi ha entre núvol <strong>públic</strong> i núvol <strong>privat</strong>? Per a quin tipus d'informació de l'estudi usaries cadascun: codi font, builds privats, comptes de jugadors, dades financeres?</p>
+    </div>
+
+    </div>
+</section>
+
+<section class="card accent-top" id="ex2">
+  <h2><span class="num">Activitat 2</span> On es processa la dada? (mist / fog / edge / cloud)</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 12 min</span>
+    <span class="pill mode">👤 Individual</span>
+    <span class="pill ca">CA 3.3 · 3.4 · 3.5</span>
+  </div>
+
+  <div class="activity">
+    <p><strong>Escenari · Sistema anti-cheat i monitorització a un joc multijugador en línia</strong></p>
+    <p>PixelForge Studios ha desplegat el sistema següent per detectar trampes i caigudes:</p>
+
+    <ul>
+      <li><strong>Dispositiu A</strong>: Mòdul anti-cheat integrat al <strong>client del joc</strong> (PC o consola del jugador). Inspecciona memòria i inputs en temps real i bloqueja accions clarament fraudulentes (aimbot òbvies) en menys d'1 ms, sense enviar res cap amunt.</li>
+      <li><strong>Dispositiu B</strong>: <strong>Servidor de partida regional</strong> (gameserver) ubicat a un datacenter pròxim al jugador. Rep telemetria de tots els clients de la partida, valida moviments i decideix si una jugada és vàlida. Envia un resum cada 30 segons.</li>
+      <li><strong>Dispositiu C</strong>: <strong>Servidor on-premise</strong> a la seu de PixelForge. Rep informes de tots els servidors regionals, aplica ML per detectar patrons subtils (wallhacks, scripts) i genera dashboards per als analistes anti-cheat.</li>
+      <li><strong>Dispositiu D</strong>: Servei de Big Data al núvol (ex. <strong>Google BigQuery</strong>) on s'emmagatzemen totes les partides dels últims 5 anys per a anàlisi forense, balanç del joc i compliment legal.</li>
+    </ul>
+
+    <div class="question-block">
+      <p><strong>2.1</strong> Assigna cada dispositiu (A, B, C, D) al nivell de processament corresponent (mist, fog, edge, cloud) i justifica cada assignació en una frase. Pots fer servir aquesta taula al teu document:</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Dispositiu</th><th>Nivell</th><th>Justificació (1 frase)</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td></td><td></td></tr>
+          <tr><td>B</td><td></td><td></td></tr>
+          <tr><td>C</td><td></td><td></td></tr>
+          <tr><td>D</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <p><strong>2.2</strong> Per quina raó és important que el dispositiu A processi les dades localment en comptes d'enviar-ho tot al cloud? (2-3 línies — pista: latència, amplada de banda, experiència del jugador).</p>
+      <p><strong>2.3</strong> Si l'estudi volgués afegir <strong>bloqueig en temps real</strong> al client (dispositiu A) quan detecta una manipulació òbvia (aimbot), a quin nivell s'hauria de processar la decisió? Per què?</p>
+    </div>
+
+    </div>
+</section>
+
+<section class="card accent-top" id="ex3">
+  <h2><span class="num">Activitat 3</span> Tres aplicacions d'IA per a un estudi de videojocs</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 20 min</span>
+    <span class="pill mode">👥 En grup (2-3)</span>
+    <span class="pill ca">CA 4.1 · 4.2 · 4.3 · 4.4 · 4.6</span>
+  </div>
+
+  <div class="activity">
+    <p>Sou l'equip tecnològic de <strong>PixelForge Studios</strong> (50 treballadors, jocs multijugador en línia i mòbils). La directora general us demana <strong>3 propostes d'aplicació d'IA</strong> per millorar l'estudi.</p>
+
+    <h3>Fitxa d'aplicació d'IA (× 3)</h3>
+    <p>Per a <strong>cada una</strong> de les 3 aplicacions, ompliu aquesta fitxa al vostre document:</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:38%;">Camp</th><th>Resposta del grup</th></tr></thead>
+        <tbody>
+          <tr><td>Nom de l'aplicació</td><td></td></tr>
+          <tr><td>Problema que resol</td><td></td></tr>
+          <tr><td>Tipus d'IA (ML, DL, LLM, visió per computador…)</td><td></td></tr>
+          <tr><td>Dades necessàries (tipus i origen)</td><td></td></tr>
+          <tr><td>Benefici principal per a l'estudi</td><td></td></tr>
+          <tr><td>Afecta entorn IT, OT o tots dos?</td><td></td></tr>
+          <tr><td>Ja existeix alguna eina comercial? Quina?</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚠ Restriccions de disseny</strong>
+      <ul>
+        <li>Les 3 aplicacions han de ser <strong>diferents entre si</strong> (no podeu proposar 3 variants del mateix).</li>
+        <li>Com a mínim <strong>una</strong> ha de fer servir dades de sistemes físics (entorn <strong>OT</strong>): estudi de captura de moviment, sensors del CPD, granja de proves QA en mòbils físics…</li>
+        <li>Com a mínim <strong>una</strong> ha de millorar l'<strong>experiència del jugador</strong> o el suport a la comunitat (atenció, moderació de xat, matchmaking…).</li>
+        <li>Eviteu propostes genèriques tipus "IA per a tot". Sigueu concrets.</li>
+      </ul>
+    </div>
+
+    <div class="question-block">
+      <p><strong>Reflexió final del grup (3.4):</strong> De les tres aplicacions que heu proposat, quina creieu que generarà <strong>més resistència</strong> entre els treballadors de l'estudi (artistes, programadors, dissenyadors, community managers)? Per què? Com gestionaríeu aquesta resistència? (3-5 línies)</p>
+    </div>
+
+    </div>
+</section>
+
+<section class="card accent-top" id="ex4">
+  <h2><span class="num">Activitat 4</span> Cicle de vida de la dada i riscos GDPR — PlayMetrics SL</h2>
+  <div class="ex-meta">
+    <span class="pill time">⏱ 10 min a l'aula + casa</span>
+    <span class="pill mode">👤 Individual</span>
+    <span class="pill ca">CA 5.1 · 5.2 · 5.3 · 5.4 · 5.9</span>
+  </div>
+
+  <div class="activity">
+    <p><strong>PlayMetrics SL</strong> ofereix telemetria i analítica de jugadors per a estudis de videojocs. El seu sistema:</p>
+    <ol>
+      <li>Recull dades de comportament del jugador dins el joc (events, partides, compres, latència, sessions) via un <strong>SDK</strong> integrat al client.</li>
+      <li>Emmagatzema les dades en una base NoSQL al núvol.</li>
+      <li>Les processa amb ML per detectar anomalies (caigudes de retenció, jugadors trampetes, problemes de balanç).</li>
+      <li>Mostra els resultats en un <strong>dashboard</strong> accessible als estudis client.</li>
+      <li>Conserva les dades <strong>durant 5 anys</strong> per a auditories, anàlisi històric i ajustament del joc.</li>
+      <li>Elimina les dades quan finalitza el contracte amb l'estudi client.</li>
+    </ol>
+
+    <h3>Part 1 · Cicle de vida (a l'aula — ompliu mínim 3 files)</h3>
+    <div class="question-block">
+      <p><strong>4.1</strong> Per a cada fase, indica què fa PlayMetrics i un risc de seguretat o privacitat que podria passar:</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Fase</th><th>Acció de PlayMetrics</th><th>Risc possible</th></tr></thead>
+        <tbody>
+          <tr><td>1. Creació / Captura</td><td></td><td></td></tr>
+          <tr><td>2. Emmagatzematge</td><td></td><td></td></tr>
+          <tr><td>3. Processament</td><td></td><td></td></tr>
+          <tr><td>4. Ús / Distribució</td><td></td><td></td></tr>
+          <tr><td>5. Arxivament</td><td></td><td></td></tr>
+          <tr><td>6. Eliminació</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Part 2 · Les 5V (a casa)</h3>
+    <div class="question-block">
+      <p><strong>4.2</strong> Per a cadascuna de les 5V, descriu com es manifesta a PlayMetrics:</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>V</th><th>Com es manifesta a PlayMetrics</th></tr></thead>
+        <tbody>
+          <tr><td>Volum</td><td></td></tr>
+          <tr><td>Velocitat</td><td></td></tr>
+          <tr><td>Varietat</td><td></td></tr>
+          <tr><td>Veracitat</td><td></td></tr>
+          <tr><td>Valor</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Part 3 · GDPR (a casa)</h3>
+    <div class="question-block">
+      <p><strong>4.3</strong> Les dades de telemetria d'un joc poden considerar-se dades personals? Quan sí i quan no? (2-3 línies — pista: ID de jugador, IP, nick, amics, hàbits horaris).</p>
+      <p><strong>4.4</strong> PlayMetrics conserva les dades 5 anys. Quin article del GDPR aplica al principi de <strong>limitació de la conservació</strong>? Quin <strong>dret del jugador</strong> pot xocar amb aquesta conservació? (2-3 línies)</p>
+      <p><strong>4.5</strong> Si un atacant accedís a la base NoSQL de PlayMetrics, quines fases del cicle de vida hauria aprofitat? Quines mesures de seguretat caldria tenir implementades? (3-4 línies)</p>
+    </div>
+
+    <h3>Mini-tiquet de sortida (a l'aula, abans de marxar)</h3>
+    <div class="question-block">
+      <p><strong>4.6</strong> Apunta al document:</p>
+      <ul>
+        <li><strong>1 paraula clau</strong> de cada bloc d'avui: cloud · IA · dades.</li>
+        <li><strong>1 pregunta</strong> que posaries a la prova final.</li>
+      </ul>
+    </div>
+
+    </div>
+</section>
+
+<!-- ============================ ENTREGA ============================ -->
+
+<section class="delivery" id="entrega">
+  <h2><span class="num" style="color:var(--gold);">Entrega</span> Què has de lliurar</h2>
+  <p class="lead" style="color:rgba(255,255,255,0.85);">Aquesta web només té el contingut i els enunciats. Les respostes les redactes al teu document i el lliures a l'aula virtual.</p>
+
+  <h3>Contingut del document</h3>
+  <ul>
+    <li><strong>Portada</strong> amb el teu nom, el mòdul (1665 — Digitalització aplicada als sectors productius) i la sessió (Sessió 2).</li>
+    <li>Les <strong>respostes a totes les preguntes</strong> marcades amb ✏ <em>Pregunta per respondre al teu document</em> (activitats 1 a 4).</li>
+    <li>De l'<strong>activitat 1</strong>: enllaç al Google Sheets o exportació en PDF/imatge incrustada al document.</li>
+    <li>Mini-tiquet de sortida final (4.6).</li>
+  </ul>
+
+  <h3>Nom del fitxer</h3>
+  <p><code>cognom_nom_dasp_s2.pdf</code></p>
+
+  <h3>Format d'entrega</h3>
+  <p>Fitxer <strong>PDF</strong> pujat a la tasca corresponent de l'aula virtual.</p>
+
+  <div class="btn-row">
+    <button class="btn gold" onclick="openTemplate()">📋 Copia plantilla d'entrega</button>
+    <button class="btn ghost" onclick="window.print()">🖨 Imprimeix per consultar en paper</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><span class="gold">La Salle Tarragona</span> · Desenvolupament d'Aplicacions Multiplataforma · Videojocs i Oci Digital</p>
+  <p>Mòdul 1665 · Digitalització aplicada als sectors productius</p>
+  </footer>
+
+<div class="modal-overlay" id="template-modal" onclick="if(event.target===this)closeTemplate()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📋 Plantilla d'entrega</h3>
+      <button class="modal-close" onclick="closeTemplate()" aria-label="Tancar">×</button>
+    </div>
+    <div class="modal-body" id="template-content"></div>
+    <div class="modal-footer">
+      <button class="btn ghost" onclick="closeTemplate()">Tanca</button>
+      <button class="btn gold" onclick="copyTemplate()">📎 Copia al porta-retalls</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function buildTemplate() {
+  const L = [];
+  L.push('=================================================');
+  L.push('  Mòdul 1665 · Digitalització aplicada als sectors productius');
+  L.push('  Sessió 2 — Cloud, IA i Dades');
+  L.push('  Plantilla d\'entrega');
+  L.push('=================================================');
+  L.push('');
+  L.push('Nom complet: _____________________________________');
+  L.push('Data:        _____________________________________');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 1 · Demo cloud IaaS / PaaS / SaaS');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('Enllaç al Google Sheets "Demo Cloud - <el meu nom>":');
+  L.push('  _________________________________________________');
+  L.push('(o adjunta una captura/exportació PDF al document)');
+  L.push('');
+  L.push('Pas A · SaaS (Google Sheets)');
+  L.push('  A.1 Qui gestiona el maquinari? _____');
+  L.push('  A.2 Qui gestiona el sistema operatiu? _____');
+  L.push('  A.3 Qui gestiona l\'aplicació? _____');
+  L.push('  A.4 Model de servei: _____');
+  L.push('');
+  L.push('Pas B · PaaS (Replit)');
+  L.push('  B.1 Qui proporciona l\'entorn d\'execució? _____');
+  L.push('  B.2 Puc instal·lar el SO que vulgui? _____');
+  L.push('  B.3 Model de servei: _____');
+  L.push('  B.4 Exemple PaaS per a backend d\'un videojoc:');
+  L.push('       ______________________________________________');
+  L.push('');
+  L.push('Pas C · IaaS (AWS / GCP)');
+  L.push('  C.1 Qui instal·la el SO? _____');
+  L.push('  C.2 Un avantatge d\'IaaS:');
+  L.push('       ______________________________________________');
+  L.push('  C.3 Exemple IaaS per a PixelForge Studios:');
+  L.push('       ______________________________________________');
+  L.push('');
+  L.push('Pas D · Reflexió');
+  L.push('  D.1 Model cloud per a estudi indie de 8 persones (tickets + CRM):');
+  L.push('       ______________________________________________');
+  L.push('       ______________________________________________');
+  L.push('  D.2 Públic vs privat. Per a cada dada de l\'estudi:');
+  L.push('       - codi font: _____');
+  L.push('       - builds privats: _____');
+  L.push('       - comptes de jugadors: _____');
+  L.push('       - dades financeres: _____');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 2 · On es processa la dada?');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('2.1 Taula d\'assignació (mist / fog / edge / cloud):');
+  L.push('  Dispositiu A (anti-cheat al client del joc)');
+  L.push('     Nivell: _____');
+  L.push('     Justificació: ________________________________');
+  L.push('  Dispositiu B (gameserver regional)');
+  L.push('     Nivell: _____');
+  L.push('     Justificació: ________________________________');
+  L.push('  Dispositiu C (servidor on-premise a la seu)');
+  L.push('     Nivell: _____');
+  L.push('     Justificació: ________________________________');
+  L.push('  Dispositiu D (Google BigQuery, 5 anys de partides)');
+  L.push('     Nivell: _____');
+  L.push('     Justificació: ________________________________');
+  L.push('');
+  L.push('2.2 Per què el dispositiu A processa local i no al cloud?');
+  L.push('     ___________________________________________________');
+  L.push('     ___________________________________________________');
+  L.push('');
+  L.push('2.3 Bloqueig en temps real: en quin nivell? Per què?');
+  L.push('     ___________________________________________________');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 3 · Tres aplicacions d\'IA per a PixelForge');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('(Recordeu les restriccions: 3 diferents, ≥1 amb OT,');
+  L.push(' ≥1 d\'experiència de jugador.)');
+  L.push('');
+  for (let i = 1; i <= 3; i++) {
+    L.push(`APLICACIÓ ${i}`);
+    L.push('  Nom: _____________________________________________');
+    L.push('  Problema: ________________________________________');
+    L.push('  Tipus d\'IA: ______________________________________');
+    L.push('  Dades necessàries: _______________________________');
+    L.push('  Benefici per a l\'estudi: __________________________');
+    L.push('  Afecta IT / OT / tots dos: _____');
+    L.push('  Eina comercial existent: _________________________');
+    L.push('');
+  }
+  L.push('3.4 Quina aplicació generarà més resistència entre els');
+  L.push('    treballadors? Per què? Com la gestionaríem?');
+  L.push('    ____________________________________________________');
+  L.push('    ____________________________________________________');
+  L.push('    ____________________________________________________');
+  L.push('');
+  L.push('-------------------------------------------------');
+  L.push('ACTIVITAT 4 · PlayMetrics — Cicle de vida + GDPR');
+  L.push('-------------------------------------------------');
+  L.push('');
+  L.push('4.1 Cicle de vida (acció + risc per a cada fase):');
+  const fases = [
+    '1. Creació / Captura',
+    '2. Emmagatzematge',
+    '3. Processament',
+    '4. Ús / Distribució',
+    '5. Arxivament',
+    '6. Eliminació'
+  ];
+  fases.forEach(f => {
+    L.push('  ' + f);
+    L.push('     Acció PlayMetrics: ___________________________');
+    L.push('     Risc possible:     ___________________________');
+  });
+  L.push('');
+  L.push('4.2 Les 5V a PlayMetrics:');
+  ['Volum', 'Velocitat', 'Varietat', 'Veracitat', 'Valor'].forEach(v => {
+    L.push('  ' + v + ': ___________________________________');
+  });
+  L.push('');
+  L.push('4.3 La telemetria d\'un joc és dada personal? Quan sí / quan no:');
+  L.push('     _____________________________________________________');
+  L.push('     _____________________________________________________');
+  L.push('');
+  L.push('4.4 Article GDPR per a limitació de conservació + dret que xoca:');
+  L.push('     _____________________________________________________');
+  L.push('     _____________________________________________________');
+  L.push('');
+  L.push('4.5 Si un atacant accedeix a la NoSQL: quines fases?');
+  L.push('     Quines mesures haurien d\'estar implementades?');
+  L.push('     _____________________________________________________');
+  L.push('     _____________________________________________________');
+  L.push('     _____________________________________________________');
+  L.push('');
+  L.push('4.6 Mini-tiquet de sortida:');
+  L.push('  Paraula clau · Cloud: __________________');
+  L.push('  Paraula clau · IA:    __________________');
+  L.push('  Paraula clau · Dades: __________________');
+  L.push('  1 pregunta que posaria a la prova final:');
+  L.push('     _____________________________________________________');
+  L.push('');
+  return L.join('\n');
+}
+
+function openTemplate() {
+  document.getElementById('template-content').textContent = buildTemplate();
+  document.getElementById('template-modal').classList.add('open');
+}
+function closeTemplate() { document.getElementById('template-modal').classList.remove('open'); }
+function copyTemplate() {
+  const text = buildTemplate();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      const original = btn.textContent;
+      btn.textContent = '✓ Copiat!';
+      setTimeout(() => btn.textContent = original, 1800);
+    }).catch(() => fallbackCopy(text));
+  } else { fallbackCopy(text); }
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); alert('Plantilla copiada al porta-retalls.'); }
+  catch (e) { alert('No s\'ha pogut copiar. Selecciona el text manualment.'); }
+  document.body.removeChild(ta);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTemplate(); });
+
+// Nav active state
+const navLinks = document.querySelectorAll('.topnav a');
+const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href')));
+function updateActiveNav() {
+  const scrollY = window.scrollY + 200;
+  let activeIdx = 0;
+  sections.forEach((sec, i) => { if (sec && sec.offsetTop <= scrollY) activeIdx = i; });
+  navLinks.forEach((link, i) => link.classList.toggle('active', i === activeIdx));
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+</script>
+
+</body>
+</html>
