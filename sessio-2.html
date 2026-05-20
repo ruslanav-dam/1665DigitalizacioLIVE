@@ -578,70 +578,47 @@
 <!-- ============================ ACTIVITATS ============================ -->
 
 <section class="card accent-top" id="ex1">
-  <h2><span class="num">Activitat 1</span> Classifica serveis cloud: IaaS, PaaS o SaaS?</h2>
+  <h2><span class="num">Activitat 1</span> Cloud: models de servei i on es processa la dada</h2>
   <div class="ex-meta">
-    <span class="pill time">12 min</span>
+    <span class="pill time">15 min</span>
     <span class="pill mode">Individual</span>
-    <span class="pill ca">CA 3.1 · 3.2 · 3.5</span>
+    <span class="pill ca">CA 3.1 · 3.2 · 3.3 · 3.4 · 3.5</span>
   </div>
 
   <div class="activity">
-    <p>El docent us mostrarà alguns d'aquests serveis en pantalla. La vostra feina és <strong>classificar-los</strong> al document. No cal obrir ni instal·lar res.</p>
 
+    <h3>Part 1 · IaaS, PaaS o SaaS?</h3>
     <div class="question-block">
       <p><strong>1.1</strong> Per a cada servei, indica si es tracta d'<strong>IaaS</strong>, <strong>PaaS</strong> o <strong>SaaS</strong>:</p>
     </div>
-
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th style="width:60%;">Servei</th><th>Model (IaaS / PaaS / SaaS)</th></tr></thead>
+        <thead><tr><th style="width:60%;">Servei</th><th>Model</th></tr></thead>
         <tbody>
           <tr><td>1. Gmail</td><td></td></tr>
-          <tr><td>2. Amazon Web Services EC2 (instàncies de servidor virtual)</td><td></td></tr>
+          <tr><td>2. Amazon Web Services EC2 (servidor virtual llogat)</td><td></td></tr>
           <tr><td>3. Firebase (backend per a apps mòbils)</td><td></td></tr>
-          <tr><td>4. Google Docs</td><td></td></tr>
-          <tr><td>5. Replit (entorn de programació al navegador)</td><td></td></tr>
-          <tr><td>6. Microsoft Azure Virtual Machines</td><td></td></tr>
-          <tr><td>7. Discord</td><td></td></tr>
-          <tr><td>8. Unity Cloud Build (compila el joc als servidors d'Unity)</td><td></td></tr>
+          <tr><td>4. Replit (entorn de programació al navegador)</td><td></td></tr>
+          <tr><td>5. Microsoft Azure Virtual Machines</td><td></td></tr>
+          <tr><td>6. Unity Cloud Build (compila el joc als servidors d'Unity)</td><td></td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="question-block">
-      <p><strong>1.2</strong> Un estudi indie de 8 persones vol fer servir un sistema de tickets de bugs (com Jira) i un CRM amb editores, sense comprar servidors ni contractar un sysadmin. Quin model cloud (IaaS / PaaS / SaaS) recomanaries? Justifica-ho en 2-3 frases.</p>
-      <p><strong>1.3</strong> Quina diferència hi ha entre núvol <strong>públic</strong> i núvol <strong>privat</strong>? Per a quina d'aquestes dades de l'estudi triaries cadascun: <em>codi font del joc no llançat</em>, <em>dades personals dels jugadors</em>, <em>build pública per descarregar</em>?</p>
-    </div>
-
-    </div>
-</section>
-
-<section class="card accent-top" id="ex2">
-  <h2><span class="num">Activitat 2</span> On es processa la dada? (mist / fog / edge / cloud)</h2>
-  <div class="ex-meta">
-    <span class="pill time">10 min</span>
-    <span class="pill mode">Individual</span>
-    <span class="pill ca">CA 3.3 · 3.4 · 3.5</span>
-  </div>
-
-  <div class="activity">
-    <p><strong>Escenari · Sistema anti-cheat i monitorització a un joc multijugador en línia</strong></p>
-    <p>PixelForge Studios ha desplegat el sistema següent per detectar trampes i caigudes:</p>
-
+    <h3>Part 2 · Mist / Fog / Edge / Cloud</h3>
+    <p>PixelForge Studios desplega el sistema anti-cheat següent en un joc multijugador en línia:</p>
     <ul>
-      <li><strong>Dispositiu A</strong>: Mòdul anti-cheat integrat al <strong>client del joc</strong> (PC o consola del jugador). Inspecciona memòria i inputs en temps real i bloqueja accions clarament fraudulentes (aimbot òbvies) en menys d'1 ms, sense enviar res cap amunt.</li>
-      <li><strong>Dispositiu B</strong>: <strong>Servidor de partida regional</strong> (gameserver) ubicat a un datacenter pròxim al jugador. Rep telemetria de tots els clients de la partida, valida moviments i decideix si una jugada és vàlida. Envia un resum cada 30 segons.</li>
-      <li><strong>Dispositiu C</strong>: <strong>Servidor on-premise</strong> a la seu de PixelForge. Rep informes de tots els servidors regionals, aplica ML per detectar patrons subtils (wallhacks, scripts) i genera dashboards per als analistes anti-cheat.</li>
-      <li><strong>Dispositiu D</strong>: Servei de Big Data al núvol (ex. <strong>Google BigQuery</strong>) on s'emmagatzemen totes les partides dels últims 5 anys per a anàlisi forense, balanç del joc i compliment legal.</li>
+      <li><strong>Dispositiu A</strong>: mòdul anti-cheat integrat al <strong>client del joc</strong> (PC del jugador). Bloqueja aimbots evidents en &lt;1 ms.</li>
+      <li><strong>Dispositiu B</strong>: <strong>servidor de partida regional</strong> en un datacenter proper. Valida moviments cada tick.</li>
+      <li><strong>Dispositiu C</strong>: <strong>servidor on-premise</strong> a la seu de PixelForge. Aplica ML sobre informes de tots els servidors regionals.</li>
+      <li><strong>Dispositiu D</strong>: <strong>Google BigQuery</strong> al núvol amb 5 anys de partides per a anàlisi forense.</li>
     </ul>
-
     <div class="question-block">
-      <p><strong>2.1</strong> Assigna cada dispositiu (A, B, C, D) al nivell de processament corresponent (mist, fog, edge, cloud) i justifica cada assignació en una frase. Pots fer servir aquesta taula al teu document:</p>
+      <p><strong>1.2</strong> Assigna cada dispositiu (A, B, C, D) al nivell corresponent (<strong>mist · fog · edge · cloud</strong>) i justifica cada assignació en una frase.</p>
     </div>
-
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Dispositiu</th><th>Nivell</th><th>Justificació (1 frase)</th></tr></thead>
+        <thead><tr><th>Dispositiu</th><th>Nivell</th><th>Justificació</th></tr></thead>
         <tbody>
           <tr><td>A</td><td></td><td></td></tr>
           <tr><td>B</td><td></td><td></td></tr>
@@ -651,87 +628,98 @@
       </table>
     </div>
 
+    <h3>Part 3 · Decisió cloud per a un estudi indie</h3>
     <div class="question-block">
-      <p><strong>2.2</strong> Per quina raó és important que el dispositiu A processi les dades <strong>localment</strong> en comptes d'enviar-ho tot al cloud? (2-3 línies — pista: latència, amplada de banda, experiència del jugador).</p>
+      <p><strong>1.3</strong> Un estudi indie de 8 persones vol fer servir un sistema de tickets de bugs (com Jira) i un CRM amb editores, sense comprar servidors ni contractar un sysadmin. <strong>Quin model de servei recomanaries (IaaS / PaaS / SaaS)? I quin model de desplegament (públic / privat / híbrid)?</strong> Justifica-ho amb almenys <strong>2 criteris</strong> (cost, manteniment, sensibilitat de les dades…). (3-4 línies)</p>
+    </div>
+
+    </div>
+</section>
+
+<section class="card accent-top" id="ex2">
+  <h2><span class="num">Activitat 2</span> Intel·ligència Artificial al sector dels videojocs</h2>
+  <div class="ex-meta">
+    <span class="pill time">12 min</span>
+    <span class="pill mode">Individual</span>
+    <span class="pill ca">CA 4.1 · 4.2 · 4.3 · 4.4 · 4.6</span>
+  </div>
+
+  <div class="activity">
+
+    <h3>Part 1 · Jerarquia de la IA</h3>
+    <div class="question-block">
+      <p><strong>2.1</strong> Aquests 4 conceptes van de més <em>general</em> a més <em>específic</em>: <em>Deep Learning</em>, <em>Machine Learning</em>, <em>IA</em>, <em>LLM</em>. Ordena'ls i posa <strong>1 exemple</strong> per a cada nivell.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:30%;">Nivell (del més general al més específic)</th><th>Concepte</th><th>1 exemple</th></tr></thead>
+        <tbody>
+          <tr><td>Nivell 1 (més general)</td><td></td><td></td></tr>
+          <tr><td>Nivell 2</td><td></td><td></td></tr>
+          <tr><td>Nivell 3</td><td></td><td></td></tr>
+          <tr><td>Nivell 4 (més específic)</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Part 2 · IA i Big Data</h3>
+    <div class="question-block">
+      <p><strong>2.2</strong> Per què la IA <strong>necessita Big Data</strong> per funcionar bé? Respon en 1-2 frases.</p>
+    </div>
+
+    <h3>Part 3 · Una aplicació d'IA per a PixelForge Studios</h3>
+    <p>Proposa <strong>una aplicació d'IA</strong> per a PixelForge Studios (estudi de videojocs de 50 persones). Omple la fitxa al teu document:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:38%;">Camp</th><th>Resposta</th></tr></thead>
+        <tbody>
+          <tr><td>Nom de l'aplicació</td><td></td></tr>
+          <tr><td>Problema que resol</td><td></td></tr>
+          <tr><td>Tipus d'IA (ML, DL, LLM, visió per computador…)</td><td></td></tr>
+          <tr><td>Dades necessàries (tipus i origen)</td><td></td></tr>
+          <tr><td>Afecta entorn IT, OT o tots dos?</td><td></td></tr>
+        </tbody>
+      </table>
     </div>
 
     </div>
 </section>
 
 <section class="card accent-top" id="ex3">
-  <h2><span class="num">Activitat 3</span> Dues aplicacions d'IA per a un estudi de videojocs</h2>
+  <h2><span class="num">Activitat 3</span> Dades, cicle de vida i GDPR — PlayMetrics SL</h2>
   <div class="ex-meta">
     <span class="pill time">18 min</span>
-    <span class="pill mode">En grup (2-3)</span>
-    <span class="pill ca">CA 4.1 · 4.2 · 4.3 · 4.4 · 4.6</span>
-  </div>
-
-  <div class="activity">
-    <p>Sou l'equip tecnològic de <strong>PixelForge Studios</strong> (50 treballadors, jocs multijugador en línia i mòbils). La directora general us demana <strong>2 propostes d'aplicació d'IA</strong> per millorar l'estudi.</p>
-
-    <h3>Fitxa d'aplicació d'IA (× 2)</h3>
-    <p>Per a <strong>cada una</strong> de les 2 aplicacions, ompliu aquesta fitxa al vostre document:</p>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th style="width:38%;">Camp</th><th>Resposta del grup</th></tr></thead>
-        <tbody>
-          <tr><td>Nom de l'aplicació</td><td></td></tr>
-          <tr><td>Problema que resol</td><td></td></tr>
-          <tr><td>Tipus d'IA (ML, DL, LLM, visió per computador…)</td><td></td></tr>
-          <tr><td>Dades necessàries (tipus i origen)</td><td></td></tr>
-          <tr><td>Benefici principal per a l'estudi</td><td></td></tr>
-          <tr><td>Afecta entorn IT, OT o tots dos?</td><td></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="callout warn">
-      <strong>Restriccions de disseny</strong>
-      <ul>
-        <li>Les 2 aplicacions han de ser <strong>diferents entre si</strong> (no poden ser dues variants del mateix).</li>
-        <li><strong>Una</strong> ha de fer servir dades de sistemes físics (entorn <strong>OT</strong>): captura de moviment, sensors del CPD, granja de proves QA en mòbils físics…</li>
-        <li><strong>L'altra</strong> ha de millorar l'<strong>experiència del jugador</strong> o el suport a la comunitat (atenció, moderació de xat, matchmaking…).</li>
-        <li>Sigueu concrets. Eviteu propostes genèriques del tipus "IA per a tot".</li>
-      </ul>
-    </div>
-
-    <div class="question-block">
-      <p><strong>3.3 — Reflexió:</strong> De les dues aplicacions que heu proposat, quina creieu que generarà <strong>més resistència</strong> entre els treballadors de l'estudi? Per què? (2-3 línies)</p>
-    </div>
-
-    </div>
-</section>
-
-<section class="card accent-top" id="ex4">
-  <h2><span class="num">Activitat 4</span> Cicle de vida de la dada i riscos GDPR — PlayMetrics SL</h2>
-  <div class="ex-meta">
-    <span class="pill time">10 min a l'aula + casa</span>
     <span class="pill mode">Individual</span>
     <span class="pill ca">CA 5.1 · 5.2 · 5.3 · 5.4 · 5.9</span>
   </div>
 
   <div class="activity">
-    <p><strong>PlayMetrics SL</strong> ofereix telemetria i analítica de jugadors per a estudis de videojocs. El seu sistema:</p>
-    <ol>
-      <li>Recull dades de comportament del jugador dins el joc (events, partides, compres, latència, sessions) via un <strong>SDK</strong> integrat al client.</li>
-      <li>Emmagatzema les dades en una base NoSQL al núvol.</li>
-      <li>Les processa amb ML per detectar anomalies (caigudes de retenció, jugadors trampetes, problemes de balanç).</li>
-      <li>Mostra els resultats en un <strong>dashboard</strong> accessible als estudis client.</li>
-      <li>Conserva les dades <strong>durant 5 anys</strong> per a auditories, anàlisi històric i ajustament del joc.</li>
-      <li>Elimina les dades quan finalitza el contracte amb l'estudi client.</li>
-    </ol>
+    <p><strong>PlayMetrics SL</strong> ofereix telemetria i analítica de jugadors per a estudis de videojocs. El seu sistema recull events del client mitjançant un <strong>SDK</strong>, els emmagatzema en una base NoSQL al núvol, els processa amb ML, els mostra a un dashboard accessible per a l'estudi client i els conserva 5 anys.</p>
 
-    <h3>Part 1 · Cicle de vida (a l'aula)</h3>
+    <h3>Part 1 · Dada, informació o coneixement?</h3>
     <div class="question-block">
-      <p><strong>4.1</strong> Per a aquestes 4 fases clau, indica què fa PlayMetrics i un risc possible:</p>
+      <p><strong>3.1</strong> Classifica cadascun d'aquests elements com a <strong>Dada</strong>, <strong>Informació</strong> o <strong>Coneixement</strong>:</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:65%;">Element</th><th>Dada / Info / Coneixement</th></tr></thead>
+        <tbody>
+          <tr><td>a) Una fila amb el valor <code>kills=12, deaths=4, accuracy=0.71</code></td><td></td></tr>
+          <tr><td>b) "El jugador X té un ratio kills/deaths superior al 99% dels jugadors"</td><td></td></tr>
+          <tr><td>c) "El jugador X és sospitós d'aimbot i ha de revisar-se manualment"</td><td></td></tr>
+        </tbody>
+      </table>
     </div>
 
+    <h3>Part 2 · Cicle de vida de la dada</h3>
+    <div class="question-block">
+      <p><strong>3.2</strong> Per a aquestes 4 fases clau del cicle de vida d'una telemetria de PlayMetrics, indica què fa l'empresa i un risc possible:</p>
+    </div>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th>Fase</th><th>Acció de PlayMetrics</th><th>Risc possible</th></tr></thead>
         <tbody>
-          <tr><td>1. Creació / Captura</td><td></td><td></td></tr>
+          <tr><td>1. Captura</td><td></td><td></td></tr>
           <tr><td>2. Emmagatzematge</td><td></td><td></td></tr>
           <tr><td>3. Ús / Distribució</td><td></td><td></td></tr>
           <tr><td>4. Eliminació</td><td></td><td></td></tr>
@@ -739,9 +727,9 @@
       </table>
     </div>
 
-    <h3>Part 2 · Les 5V (a casa)</h3>
+    <h3>Part 3 · Les 5V del Big Data</h3>
     <div class="question-block">
-      <p><strong>4.2</strong> Per a cadascuna de les 5V, descriu en una frase com es manifesta a PlayMetrics:</p>
+      <p><strong>3.3</strong> Per a cadascuna de les 5V, descriu en <strong>una frase curta</strong> com es manifesta a PlayMetrics:</p>
     </div>
     <div class="tbl-wrap">
       <table>
@@ -756,15 +744,15 @@
       </table>
     </div>
 
-    <h3>Part 3 · GDPR (a casa)</h3>
+    <h3>Part 4 · GDPR</h3>
     <div class="question-block">
-      <p><strong>4.3</strong> Quan són personals les dades de telemetria d'un joc? Posa <strong>2 exemples</strong> de dades que clarament les farien personals (i, per tant, sotmeses al GDPR). (2 línies — pista: IP, ID compte, nick visible, ubicació geogràfica, hàbits horaris).</p>
-      <p><strong>4.4</strong> PlayMetrics conserva les dades 5 anys. Si un jugador demana que se li esborrin <em>ja</em>, quin <strong>dret</strong> està exercint? Què hauria de fer PlayMetrics? (2-3 línies)</p>
+      <p><strong>3.4</strong> Anomena <strong>2 drets</strong> que el GDPR dona als jugadors (usuaris) respecte les seves dades personals.</p>
+      <p><strong>3.5</strong> Un jugador demana a PlayMetrics que esborri les seves dades <em>ja</em>, abans dels 5 anys de retenció. <strong>Quin dret està exercint?</strong> <strong>Què ha de fer PlayMetrics?</strong> (2-3 línies)</p>
     </div>
 
-    <h3>Mini-tiquet de sortida (a l'aula, abans de marxar)</h3>
+    <h3>Mini-tiquet de sortida</h3>
     <div class="question-block">
-      <p><strong>4.5</strong> Apunta al document:</p>
+      <p><strong>3.6</strong> Apunta al final del document:</p>
       <ul>
         <li><strong>1 paraula clau</strong> de cada bloc d'avui: cloud · IA · dades.</li>
         <li><strong>1 pregunta</strong> que posaries a la prova final.</li>
@@ -783,8 +771,8 @@
   <h3>Contingut del document</h3>
   <ul>
     <li><strong>Portada</strong> amb el teu nom, el mòdul (1665 — Digitalització aplicada als sectors productius) i la sessió (Sessió 2).</li>
-    <li>Les <strong>respostes a totes les preguntes</strong> marcades com a <em>Pregunta per respondre al teu document</em> (activitats 1 a 4).</li>
-    <li>El mini-tiquet de sortida final (4.5).</li>
+    <li>Les <strong>respostes a totes les preguntes</strong> marcades com a <em>Pregunta per respondre al teu document</em> (activitats 1 a 3).</li>
+    <li>El mini-tiquet de sortida final (3.6).</li>
   </ul>
 
   <h3>Nom del fitxer</h3>
@@ -833,43 +821,26 @@ function buildTemplate() {
   L.push('Data:        _____________________________________');
   L.push('');
   L.push('-------------------------------------------------');
-  L.push('ACTIVITAT 1 · Classifica serveis cloud (IaaS / PaaS / SaaS)');
+  L.push('ACTIVITAT 1 · Cloud — models de servei i continuum');
   L.push('-------------------------------------------------');
   L.push('');
-  L.push('1.1 Classificació de cada servei:');
+  L.push('Part 1 · 1.1 Classifica cada servei com IaaS, PaaS o SaaS:');
   const serveis = [
     'Gmail',
-    'AWS EC2 (instàncies de servidor virtual)',
+    'AWS EC2 (servidor virtual llogat)',
     'Firebase (backend per a apps mòbils)',
-    'Google Docs',
     'Replit (entorn de programació al navegador)',
     'Microsoft Azure Virtual Machines',
-    'Discord',
     'Unity Cloud Build'
   ];
   serveis.forEach((s, i) => {
     L.push(`  ${i+1}. ${s}`);
-    L.push('     Model (IaaS / PaaS / SaaS): _____');
+    L.push('     Model: _____');
   });
   L.push('');
-  L.push('1.2 Estudi indie de 8 persones que vol fer servir');
-  L.push('    un sistema de tickets (com Jira) i un CRM, sense');
-  L.push('    comprar servidors ni contractar un sysadmin.');
-  L.push('    Model cloud recomanat i justificació (2-3 frases):');
-  L.push('     ___________________________________________________');
-  L.push('     ___________________________________________________');
-  L.push('');
-  L.push('1.3 Núvol públic vs privat. Tria un per a cada dada:');
-  L.push('     - codi font del joc no llançat: _____');
-  L.push('     - dades personals dels jugadors: _____');
-  L.push('     - build pública per descarregar: _____');
-  L.push('');
-  L.push('-------------------------------------------------');
-  L.push('ACTIVITAT 2 · On es processa la dada?');
-  L.push('-------------------------------------------------');
-  L.push('');
-  L.push('2.1 Taula d\'assignació (mist / fog / edge / cloud):');
-  L.push('  Dispositiu A (anti-cheat al client del joc)');
+  L.push('Part 2 · 1.2 Assigna cada dispositiu del sistema anti-cheat');
+  L.push('             al nivell mist / fog / edge / cloud:');
+  L.push('  Dispositiu A (anti-cheat al client del joc, <1 ms)');
   L.push('     Nivell: _____');
   L.push('     Justificació: ________________________________');
   L.push('  Dispositiu B (gameserver regional)');
@@ -882,64 +853,72 @@ function buildTemplate() {
   L.push('     Nivell: _____');
   L.push('     Justificació: ________________________________');
   L.push('');
-  L.push('2.2 Per què el dispositiu A processa local i no al cloud?');
-  L.push('     ___________________________________________________');
-  L.push('     ___________________________________________________');
+  L.push('Part 3 · 1.3 Estudi indie de 8 persones (tickets + CRM,');
+  L.push('             sense servidors propis ni sysadmin):');
+  L.push('     Model de servei (IaaS / PaaS / SaaS): _____');
+  L.push('     Model de desplegament (públic / privat / híbrid): _____');
+  L.push('     Justifica amb 2 criteris (3-4 línies):');
+  L.push('     _____________________________________________________');
+  L.push('     _____________________________________________________');
+  L.push('     _____________________________________________________');
   L.push('');
   L.push('-------------------------------------------------');
-  L.push('ACTIVITAT 3 · Dues aplicacions d\'IA per a PixelForge');
+  L.push('ACTIVITAT 2 · Intel·ligència Artificial al sector');
   L.push('-------------------------------------------------');
   L.push('');
-  L.push('(Recordeu: 1 amb OT i 1 d\'experiència de jugador.)');
+  L.push('Part 1 · 2.1 Ordena de més general a més específic:');
+  L.push('         IA · Machine Learning · Deep Learning · LLM');
+  L.push('  Nivell 1 (més general): _____________  Exemple: _________________');
+  L.push('  Nivell 2:               _____________  Exemple: _________________');
+  L.push('  Nivell 3:               _____________  Exemple: _________________');
+  L.push('  Nivell 4 (més específic): ___________  Exemple: _________________');
   L.push('');
-  for (let i = 1; i <= 2; i++) {
-    L.push(`APLICACIÓ ${i}`);
-    L.push('  Nom: _____________________________________________');
-    L.push('  Problema: ________________________________________');
-    L.push('  Tipus d\'IA: ______________________________________');
-    L.push('  Dades necessàries: _______________________________');
-    L.push('  Benefici per a l\'estudi: __________________________');
-    L.push('  Afecta IT / OT / tots dos: _____');
-    L.push('');
-  }
-  L.push('3.3 Quina aplicació generarà més resistència entre');
-  L.push('    els treballadors? Per què? (2-3 línies)');
-  L.push('    ____________________________________________________');
-  L.push('    ____________________________________________________');
+  L.push('Part 2 · 2.2 Per què la IA necessita Big Data? (1-2 frases)');
+  L.push('     _____________________________________________________');
+  L.push('     _____________________________________________________');
+  L.push('');
+  L.push('Part 3 · 2.3 Proposa 1 aplicació d\'IA per a PixelForge Studios:');
+  L.push('  Nom: ____________________________________________');
+  L.push('  Problema: _______________________________________');
+  L.push('  Tipus d\'IA: _____________________________________');
+  L.push('  Dades necessàries: ______________________________');
+  L.push('  Afecta IT / OT / tots dos: _____');
   L.push('');
   L.push('-------------------------------------------------');
-  L.push('ACTIVITAT 4 · PlayMetrics — Cicle de vida + GDPR');
+  L.push('ACTIVITAT 3 · Dades, cicle de vida i GDPR — PlayMetrics');
   L.push('-------------------------------------------------');
   L.push('');
-  L.push('4.1 Cicle de vida (acció + risc per a 4 fases clau):');
-  const fases = [
-    '1. Creació / Captura',
-    '2. Emmagatzematge',
-    '3. Ús / Distribució',
-    '4. Eliminació'
-  ];
+  L.push('Part 1 · 3.1 Dada / Informació / Coneixement:');
+  L.push('  a) Fila: kills=12, deaths=4, accuracy=0.71');
+  L.push('     Resposta: _____');
+  L.push('  b) "El jugador X té un ratio kills/deaths superior al 99%"');
+  L.push('     Resposta: _____');
+  L.push('  c) "El jugador X és sospitós d\'aimbot i ha de revisar-se"');
+  L.push('     Resposta: _____');
+  L.push('');
+  L.push('Part 2 · 3.2 Cicle de vida (4 fases clau):');
+  const fases = ['1. Captura', '2. Emmagatzematge', '3. Ús / Distribució', '4. Eliminació'];
   fases.forEach(f => {
     L.push('  ' + f);
     L.push('     Acció PlayMetrics: ___________________________');
     L.push('     Risc possible:     ___________________________');
   });
   L.push('');
-  L.push('4.2 Les 5V a PlayMetrics (1 frase per V):');
+  L.push('Part 3 · 3.3 Les 5V a PlayMetrics (1 frase per V):');
   ['Volum', 'Velocitat', 'Varietat', 'Veracitat', 'Valor'].forEach(v => {
     L.push('  ' + v + ': ___________________________________');
   });
   L.push('');
-  L.push('4.3 Quan són personals les dades de telemetria?');
-  L.push('    Posa 2 exemples concrets:');
-  L.push('     - _____________________________________________');
-  L.push('     - _____________________________________________');
+  L.push('Part 4 · 3.4 Anomena 2 drets del GDPR del jugador:');
+  L.push('     1. _____________________________________________');
+  L.push('     2. _____________________________________________');
   L.push('');
-  L.push('4.4 Si un jugador demana que se li esborrin les dades ja,');
-  L.push('    quin dret està exercint? Què hauria de fer PlayMetrics?');
-  L.push('     _____________________________________________________');
-  L.push('     _____________________________________________________');
+  L.push('       3.5 Jugador demana esborrar dades abans dels 5 anys.');
+  L.push('           Quin dret exerceix? Què ha de fer PlayMetrics?');
+  L.push('           ____________________________________________');
+  L.push('           ____________________________________________');
   L.push('');
-  L.push('4.5 Mini-tiquet de sortida:');
+  L.push('3.6 Mini-tiquet de sortida:');
   L.push('  Paraula clau · Cloud: __________________');
   L.push('  Paraula clau · IA:    __________________');
   L.push('  Paraula clau · Dades: __________________');
